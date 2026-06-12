@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZAMAN — Modular Retro Console | Kawn Electro</title>
+<meta name="description" content="ZAMAN: a modular, repairable retro gaming console for golden-age emulation up to the PS2 & GameCube era. By Kawn Electro, a Saudi independent hardware lab.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0b1022;
+  --night-2:#0e1530;
+  --panel:#141b38;
+  --panel-2:#1a2348;
+  --ink:#edf0fb;
+  --sub:#98a2c9;
+  --faint:#5f6995;
+  --sand:#e8b765;
+  --sand-deep:#c9923c;
+  --sand-soft:rgba(232,183,101,.13);
+  --peri:#8ea6ff;
+  --peri-soft:rgba(142,166,255,.14);
+  --line:#263158;
+  --line-soft:#1d2748;
+  --display:'Chakra Petch',sans-serif;
+  --body:'IBM Plex Sans',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --arabic:'Reem Kufi',sans-serif;
+  --ease:cubic-bezier(.22,.9,.3,1);
+  --nav-h:68px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  background:var(--night);
+  color:var(--ink);
+  line-height:1.65;
+  overflow-x:hidden;
+}
+::selection{background:var(--sand);color:var(--night)}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+/* ───────── shared layout ───────── */
+section{padding:7rem 1.5rem;position:relative}
+.wrap{max-width:1100px;margin:0 auto}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--sand);
+  margin-bottom:1.1rem;
+}
+.eyebrow::before{content:'';width:8px;height:8px;background:var(--sand);box-shadow:0 0 12px var(--sand)}
+h2{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(1.7rem,3.4vw,2.4rem);
+  letter-spacing:.01em;line-height:1.15;
+  margin-bottom:1.2rem;
+}
+.lede{color:var(--sub);max-width:60ch;font-size:1.05rem}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ───────── nav ───────── */
+.navbar{
+  position:fixed;inset:0 0 auto 0;height:var(--nav-h);z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;
+  background:rgba(11,16,34,.85);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-soft);
+}
+.nav-inner{width:100%;max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.logo{display:flex;align-items:center;gap:.65rem;text-decoration:none}
+.logo img{height:36px;width:auto}
+.logo span{font-family:var(--display);font-weight:600;font-size:.85rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+.nav-links{display:flex;align-items:center;gap:1.6rem;list-style:none}
+.nav-links a{
+  font-family:var(--display);font-size:.78rem;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
+  color:var(--sub);padding:.35rem 0;position:relative;transition:color .25s;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:0;width:100%;height:2px;
+  background:var(--sand);transform:scaleX(0);transform-origin:left;
+  transition:transform .3s var(--ease);
+}
+.nav-links a:hover,.nav-links a.active{color:var(--ink)}
+.nav-links a.active::after{transform:scaleX(1)}
+.nav-cta{
+  font-family:var(--display);font-size:.75rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;text-decoration:none;
+  color:var(--night);background:var(--sand);
+  padding:.55rem 1.1rem;border-radius:3px;
+  transition:background .25s,transform .25s;
+  white-space:nowrap;
+}
+.nav-cta:hover{background:#f3c87d;transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:.5rem;background:none;border:0}
+.hamburger span{width:24px;height:2px;background:var(--ink);transition:transform .3s,opacity .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ───────── hero ───────── */
+#home{
+  min-height:100svh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding-top:calc(var(--nav-h) + 3rem);
+  background:
+    radial-gradient(1100px 600px at 50% -10%,rgba(142,166,255,.10),transparent 65%),
+    radial-gradient(900px 500px at 50% 115%,rgba(232,183,101,.07),transparent 60%),
+    var(--night);
+  overflow:hidden;
+}
+.hero-zaman-ar{
+  position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
+  font-family:var(--arabic);font-weight:700;
+  font-size:clamp(16rem,42vw,34rem);line-height:1;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(142,166,255,.13);
+  user-select:none;pointer-events:none;z-index:0;
+}
+/* PS2-boot "time towers" */
+.towers{position:absolute;inset:auto 0 0 0;height:38%;display:flex;align-items:flex-end;justify-content:center;gap:2.2vw;z-index:0;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to top,rgba(0,0,0,.9),transparent);mask-image:linear-gradient(to top,rgba(0,0,0,.9),transparent)}
+.towers i{
+  display:block;width:clamp(14px,2.4vw,30px);
+  background:linear-gradient(to top,rgba(142,166,255,.16),rgba(142,166,255,.02));
+  border:1px solid rgba(142,166,255,.10);border-bottom:0;
+  animation:tower-rise 9s var(--ease) infinite alternate;
+}
+.towers i:nth-child(1){height:34%;animation-delay:-1s}
+.towers i:nth-child(2){height:62%;animation-delay:-3s}
+.towers i:nth-child(3){height:45%;animation-delay:-5s}
+.towers i:nth-child(4){height:78%;animation-delay:-2s}
+.towers i:nth-child(5){height:52%;animation-delay:-6s}
+.towers i:nth-child(6){height:68%;animation-delay:-4s}
+.towers i:nth-child(7){height:40%;animation-delay:-7s}
+.towers i:nth-child(8){height:58%;animation-delay:-1.5s}
+@keyframes tower-rise{from{transform:scaleY(.92)}to{transform:scaleY(1.06)}}
+.hero-inner{position:relative;z-index:1;max-width:820px;margin:0 auto}
+.hero-logo{height:88px;width:auto;margin:0 auto 2rem;filter:drop-shadow(0 0 24px rgba(232,183,101,.35))}
+.hero-title{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(3.2rem,9vw,6rem);
+  letter-spacing:.14em;line-height:1;
+  text-indent:.14em; /* visually re-centre tracked caps */
+  margin-bottom:1.4rem;
+  background:linear-gradient(180deg,#fff 20%,var(--sand) 120%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-tag{
+  font-family:var(--display);font-weight:500;font-size:clamp(.95rem,2vw,1.2rem);
+  letter-spacing:.06em;color:var(--ink);margin-bottom:.6rem;
+}
+.hero-tag em{font-style:normal;color:var(--peri)}
+.hero-sub{font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;color:var(--faint);margin-bottom:2.6rem}
+.btn{
+  display:inline-block;font-family:var(--display);font-weight:600;
+  font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
+  color:var(--night);background:var(--sand);
+  padding:.95rem 2.2rem;border-radius:3px;border:1px solid var(--sand);
+  box-shadow:0 0 0 0 rgba(232,183,101,.4);
+  transition:transform .25s var(--ease),box-shadow .25s,background .25s;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(232,183,101,.25);background:#f3c87d}
+.btn-ghost{background:transparent;color:var(--sand)}
+.btn-ghost:hover{background:var(--sand-soft);box-shadow:none}
+.hero-meta{
+  margin-top:3.2rem;display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+}
+.hero-meta b{display:block;font-weight:500;color:var(--sub);font-size:.8rem;margin-top:.2rem}
+
+/* ───────── why ───────── */
+#why-zaman{background:var(--night-2);border-block:1px solid var(--line-soft)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.5rem}
+.why-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:6px;
+  padding:1.9rem 1.6rem;
+  transition:transform .3s var(--ease),border-color .3s;
+}
+.why-card:hover{transform:translateY(-4px);border-color:var(--sand-deep)}
+.why-card .k{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;color:var(--peri);
+  display:block;margin-bottom:1rem;
+}
+.why-card h3{font-family:var(--display);font-weight:600;font-size:1.05rem;letter-spacing:.04em;margin-bottom:.7rem}
+.why-card p{color:var(--sub);font-size:.95rem}
+
+/* ───────── project / mode toggle ───────── */
+.mode-head{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.mode-switch{
+  display:inline-flex;border:1px solid var(--line);border-radius:5px;overflow:hidden;
+  background:var(--panel);
+}
+.mode-switch button{
+  font-family:var(--display);font-weight:600;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--sub);background:transparent;border:0;padding:.7rem 1.5rem;cursor:pointer;
+  transition:color .25s,background .25s;
+}
+.mode-switch button[aria-pressed="true"]{background:var(--sand);color:var(--night)}
+.rig{
+  margin-top:2.6rem;position:relative;
+  background:
+    radial-gradient(600px 300px at 50% 50%,rgba(142,166,255,.06),transparent 70%),
+    var(--night-2);
+  border:1px solid var(--line);border-radius:8px;
+  height:340px;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.rig-grid{position:absolute;inset:0;background-image:
+  linear-gradient(rgba(142,166,255,.05) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(142,166,255,.05) 1px,transparent 1px);
+  background-size:36px 36px;pointer-events:none}
+.device{position:absolute;top:50%;transition:opacity .55s var(--ease),transform .55s var(--ease)}
+/* wing: handheld */
+.wing{
+  left:50%;transform:translate(-50%,-50%);
+  width:min(420px,72vw);height:170px;border-radius:18px;
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.45);
+  display:flex;align-items:center;justify-content:space-between;padding:0 1.1rem;
+}
+.wing .screen{
+  width:55%;height:72%;border-radius:8px;
+  background:radial-gradient(120% 120% at 30% 20%,#23306b,#101737);
+  border:1px solid #2c3a72;position:relative;overflow:hidden;
+}
+.wing .screen::after{
+  content:'زمن';font-family:var(--arabic);font-weight:700;color:rgba(232,183,101,.8);
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:2rem;text-shadow:0 0 18px rgba(232,183,101,.5);
+}
+.pad{display:flex;flex-direction:column;align-items:center;gap:10px}
+.stick{width:30px;height:30px;border-radius:50%;background:#0c1228;border:2px solid var(--line)}
+.dpad,.face{display:grid;grid-template-columns:repeat(3,8px);grid-template-rows:repeat(3,8px);gap:2px}
+.dpad i:nth-child(2),.dpad i:nth-child(4),.dpad i:nth-child(6),.dpad i:nth-child(8){background:#39497f;border-radius:2px}
+.face i:nth-child(2),.face i:nth-child(4),.face i:nth-child(6),.face i:nth-child(8){background:var(--sand-deep);border-radius:50%}
+/* nest: dock */
+.nest{
+  left:50%;transform:translate(-50%,-50%) scale(.92);opacity:0;
+  width:min(300px,60vw);height:190px;
+}
+.nest .tower{
+  position:absolute;inset:auto 0 0 0;height:120px;border-radius:10px;
+  background:linear-gradient(180deg,var(--panel-2),#10162f);
+  border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.45);
+}
+.nest .tower::before{ /* vent slits */
+  content:'';position:absolute;left:18px;right:18px;bottom:16px;height:34px;
+  background:repeating-linear-gradient(90deg,#222d5c 0 4px,transparent 4px 10px);
+  border-radius:3px;opacity:.7;
+}
+.nest .tower::after{ /* status LED */
+  content:'';position:absolute;right:16px;top:14px;width:7px;height:7px;border-radius:50%;
+  background:var(--peri);box-shadow:0 0 10px var(--peri);
+}
+.nest .slot{
+  position:absolute;top:38px;left:50%;transform:translateX(-50%);
+  width:130px;height:14px;border-radius:4px 4px 0 0;
+  background:#0a0f24;border:1px solid var(--line);border-bottom:0;
+}
+/* core cartridge */
+.core{
+  position:absolute;z-index:3;width:96px;height:58px;border-radius:7px;
+  background:linear-gradient(180deg,#2a356b,#1b2450);
+  border:1px solid #3b4a8c;
+  box-shadow:0 0 0 1px rgba(142,166,255,.15),0 10px 28px rgba(0,0,0,.5),0 0 22px rgba(142,166,255,.18);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;color:var(--peri);
+  top:50%;left:50%;
+  transform:translate(-50%,-50%) translate(0,-6px);
+  transition:transform .8s var(--ease);
+}
+.core::after{content:'';position:absolute;inset:auto 14px 6px 14px;height:5px;border-radius:2px;
+  background:repeating-linear-gradient(90deg,var(--sand-deep) 0 5px,transparent 5px 9px);opacity:.85}
+/* docked state */
+.rig[data-mode="docked"] .wing{opacity:0;transform:translate(-50%,-50%) scale(.94)}
+.rig[data-mode="docked"] .nest{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.rig[data-mode="docked"] .core{transform:translate(-50%,-50%) translate(0,-34px)}
+.rig-caption{
+  margin-top:1rem;font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;
+  color:var(--faint);text-align:center;min-height:1.4em;
+}
+.rig-caption b{color:var(--sub);font-weight:500}
+
+/* component cards */
+.comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3.5rem}
+.comp-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  transition:transform .3s var(--ease),border-color .3s;
+}
+.comp-card:hover{transform:translateY(-4px);border-color:var(--peri)}
+.comp-card img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--night-2);cursor:zoom-in}
+.comp-card .body{padding:1.3rem 1.4rem 1.5rem}
+.comp-card h3{font-family:var(--display);font-weight:600;font-size:1rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem;color:var(--sand)}
+.comp-card p{color:var(--sub);font-size:.92rem}
+.core-detail{margin-top:3.5rem}
+.core-detail h3{font-family:var(--display);font-weight:600;font-size:1rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin-bottom:1.2rem}
+.core-images{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.core-images img{border:1px solid var(--line);border-radius:6px;background:var(--night-2);cursor:zoom-in}
+
+/* ───────── specs ───────── */
+#specs{background:var(--night-2);border-block:1px solid var(--line-soft)}
+.specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2.5rem}
+.spec-card{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.spec-card.wide{grid-column:1 / -1}
+.spec-card header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem 1.3rem;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+}
+.spec-card header h3{font-family:var(--display);font-weight:600;font-size:.95rem;letter-spacing:.12em;text-transform:uppercase}
+.spec-card header .tag{font-family:var(--mono);font-size:.65rem;letter-spacing:.18em;color:var(--peri)}
+.spec-row{
+  display:grid;grid-template-columns:130px 1fr;gap:1rem;
+  padding:.85rem 1.3rem;border-bottom:1px solid var(--line-soft);
+}
+.spec-row:last-child{border-bottom:0}
+.spec-row dt{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding-top:.15rem}
+.spec-row dd{font-family:var(--mono);font-size:.84rem;color:var(--ink)}
+.io-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.35rem .9rem}
+.io-list li{font-family:var(--mono);font-size:.8rem;color:var(--ink)}
+.io-list li::before{content:'▸ ';color:var(--sand)}
+.spec-note{margin-top:1.4rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;color:var(--faint)}
+
+/* ───────── progress ───────── */
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2.5rem}
+.gallery img{
+  width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;
+  border:1px solid var(--line);cursor:zoom-in;background:var(--night-2);
+  transition:transform .3s var(--ease),border-color .3s;
+}
+.gallery img:hover{transform:scale(1.015);border-color:var(--sand-deep)}
+
+/* ───────── about / founder ───────── */
+#about{background:var(--night-2);border-block:1px solid var(--line-soft)}
+.about-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:3rem;align-items:start}
+.about-grid p{color:var(--sub);margin-bottom:1.1rem}
+.quote{
+  border-left:3px solid var(--sand);background:var(--sand-soft);
+  padding:1.2rem 1.4rem;border-radius:0 6px 6px 0;
+  font-family:var(--display);font-weight:500;font-size:1.05rem;color:var(--ink);
+  margin-bottom:1.6rem;
+}
+.about-logo{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:2rem;display:flex;justify-content:center}
+.about-logo img{max-height:130px;width:auto}
+.founder-grid{display:grid;grid-template-columns:280px 1fr;gap:3rem;align-items:center}
+.founder-photo img{
+  width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;
+  border:1px solid var(--line);
+}
+.founder-grid p{color:var(--sub);margin-bottom:1.1rem}
+.cred{
+  display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--peri);border:1px solid var(--line);
+  padding:.35rem .8rem;border-radius:3px;margin-top:.4rem;
+}
+
+/* ───────── contact ───────── */
+#contact{text-align:center;background:
+  radial-gradient(700px 360px at 50% 110%,rgba(232,183,101,.08),transparent 65%),var(--night)}
+.email-link{
+  font-family:var(--mono);font-size:clamp(.85rem,2.4vw,1.05rem);color:var(--sand);
+  text-decoration:none;border-bottom:1px solid var(--sand-deep);padding-bottom:2px;
+  transition:color .25s;word-break:break-all;
+}
+.email-link:hover{color:#f3c87d}
+.loc{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:1rem}
+.contact-cta{margin-top:2.8rem}
+.contact-cta p{font-size:.9rem;color:var(--sub);margin-top:.9rem}
+
+/* ───────── footer ───────── */
+.site-footer{
+  border-top:1px solid var(--line-soft);padding:2.6rem 1.5rem;text-align:center;
+}
+.social-links{display:flex;justify-content:center;gap:1.2rem;margin-bottom:1.4rem}
+.social-links a{
+  display:flex;align-items:center;justify-content:center;width:42px;height:42px;
+  border:1px solid var(--line);border-radius:5px;transition:border-color .25s,transform .25s;
+}
+.social-links a:hover{border-color:var(--sand);transform:translateY(-2px)}
+.social-links svg{width:18px;height:18px;fill:var(--sub)}
+.social-links a:hover svg{fill:var(--sand)}
+.copyright{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;color:var(--faint)}
+.fineprint{font-size:.72rem;color:var(--faint);margin-top:.5rem}
+
+/* ───────── lightbox ───────── */
+.lightbox{
+  position:fixed;inset:0;background:rgba(7,10,22,.92);z-index:200;
+  display:flex;align-items:center;justify-content:center;padding:2rem;
+  opacity:0;pointer-events:none;transition:opacity .3s;cursor:zoom-out;
+}
+.lightbox.open{opacity:1;pointer-events:auto}
+.lightbox img{max-width:92vw;max-height:88vh;border-radius:6px;border:1px solid var(--line)}
+
+/* ───────── responsive ───────── */
+@media (max-width:900px){
+  .why-grid,.comp-grid{grid-template-columns:1fr 1fr}
+  .specs-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
+  .founder-grid{grid-template-columns:1fr;gap:2rem}
+  .founder-photo{max-width:280px}
+}
+@media (max-width:680px){
+  section{padding:5rem 1.25rem}
+  .nav-links{
+    position:fixed;top:var(--nav-h);right:0;width:min(280px,80vw);
+    height:calc(100vh - var(--nav-h));flex-direction:column;align-items:flex-start;
+    gap:.4rem;padding:1.6rem;background:var(--night-2);
+    border-left:1px solid var(--line);
+    transform:translateX(100%);transition:transform .35s var(--ease);
+  }
+  .nav-links.open{transform:none}
+  .nav-links a{font-size:.9rem;padding:.6rem 0;display:block;width:100%}
+  .hamburger{display:flex}
+  .nav-cta{display:none}
+  .why-grid,.comp-grid,.core-images,.gallery{grid-template-columns:1fr}
+  .spec-row{grid-template-columns:1fr;gap:.2rem}
+  .rig{height:300px}
+  .hero-zaman-ar{font-size:18rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+:focus-visible{outline:2px solid var(--sand);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="logo">
+      <img src="images/Zaman_Logo.png" alt="Zaman logo">
+      <span>Kawn Electro</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" data-section="home" class="active">Home</a></li>
+      <li><a href="#why-zaman" data-section="why-zaman">Why Zaman</a></li>
+      <li><a href="#project" data-section="project">Project</a></li>
+      <li><a href="#specs" data-section="specs">Specs</a></li>
+      <li><a href="#about" data-section="about">About</a></li>
+      <li><a href="#founder" data-section="founder">Founder</a></li>
+      <li><a href="#contact" data-section="contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSc5cWbgayor35DVEBR7uxhy4HpG3ON7OKLDusDju3SYBmw71Q/viewform?usp=header" target="_blank" rel="noopener">Join the waitlist</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section id="home">
+  <span class="hero-zaman-ar" aria-hidden="true">زمن</span>
+  <div class="towers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="hero-inner reveal in">
+    <img src="images/Zaman_Hero.png" alt="" class="hero-logo" onerror="this.style.display='none'">
+    <h1 class="hero-title">ZAMAN</h1>
+    <p class="hero-tag">Golden-age retro emulation — up to the <em>PS2 &amp; GameCube</em> era</p>
+    <p class="hero-sub">By Kawn Electro · Saudi independent hardware engineering lab</p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc5cWbgayor35DVEBR7uxhy4HpG3ON7OKLDusDju3SYBmw71Q/viewform?usp=header" target="_blank" rel="noopener" class="btn">Join the waitlist</a>
+    <div class="hero-meta">
+      <div>Modules<b>Core · Wing · Nest</b></div>
+      <div>Philosophy<b>Modular &amp; repairable</b></div>
+      <div>Arriving<b>End of 2026</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section id="why-zaman">
+  <div class="wrap reveal">
+    <span class="eyebrow">Why Zaman</span>
+    <h2>A console built to outlast its generation</h2>
+    <p class="lede">"Zaman" means <em>time</em> in Arabic — and time is exactly what this hardware is designed to survive.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="k">01 · UPGRADE, DON'T REPLACE</span>
+        <h3>Economic modularity</h3>
+        <p>Why buy an entire new device every generation? Keep the high-quality screen, controller (Wing) and dock (Nest) you already own — and upgrade just the Core.</p>
+      </div>
+      <div class="why-card">
+        <span class="k">02 · BOOT INTO PLAY</span>
+        <h3>Meaningful fun</h3>
+        <p>A dedicated device that respects your time instead of hijacking it. No feeds, no doomscrolling — a tailored OS boots straight into your games in seconds.</p>
+      </div>
+      <div class="why-card">
+        <span class="k">03 · YOURS TO TINKER</span>
+        <h3>Open ecosystem</h3>
+        <p>Zaman fully embraces open-source operating systems and emulation frontends. Tweak and tune your ultimate retro experience, free of corporate software restrictions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECT ============ -->
+<section id="project">
+  <div class="wrap reveal">
+    <div class="mode-head">
+      <div>
+        <span class="eyebrow">The Project</span>
+        <h2>One Core. Two bodies.</h2>
+        <p class="lede">Zaman is a hybrid console designed for longevity, repairability, and cost-effective upgrades — a swappable Core that slides between a handheld Wing and a desktop Nest.</p>
+      </div>
+      <div class="mode-switch" role="group" aria-label="Play mode">
+        <button type="button" id="modeHandheld" aria-pressed="true">Handheld</button>
+        <button type="button" id="modeDocked" aria-pressed="false">Docked</button>
+      </div>
+    </div>
+
+    <div class="rig" id="rig" data-mode="handheld" aria-hidden="true">
+      <div class="rig-grid"></div>
+      <div class="device wing">
+        <div class="pad"><div class="stick"></div><div class="dpad"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="screen"></div>
+        <div class="pad"><div class="face"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="stick"></div></div>
+      </div>
+      <div class="device nest">
+        <div class="slot"></div>
+        <div class="tower"></div>
+      </div>
+      <div class="core">CORE</div>
+    </div>
+    <p class="rig-caption" id="rigCaption"><b>Handheld:</b> the Core powers the Wing — a 6&Prime; 120 Hz OLED handheld.</p>
+
+    <div class="comp-grid">
+      <article class="comp-card">
+        <img src="images/Zaman_Core_Top.png" alt="Zaman Core module" data-zoom>
+        <div class="body">
+          <h3>Core</h3>
+          <p>The swappable brain — efficient processor, RAM, storage and wireless. Upgradable across generations.</p>
+        </div>
+      </article>
+      <article class="comp-card">
+        <img src="images/Zaman_Wing.png" alt="Zaman Wing handheld module" data-zoom>
+        <div class="body">
+          <h3>Wing</h3>
+          <p>The handheld body — high-refresh 6&Prime; display, large battery, and hall-effect controls.</p>
+        </div>
+      </article>
+      <article class="comp-card">
+        <img src="images/Zaman_Nest.png" alt="Zaman Nest docking module" data-zoom>
+        <div class="body">
+          <h3>Nest</h3>
+          <p>The desktop body — a docking station with full connectivity and advanced cooling that unlocks the processor's full performance.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="core-detail">
+      <h3>Core module — top &amp; bottom</h3>
+      <div class="core-images">
+        <img src="images/Zaman_Core_Top.png" alt="Core module, top view" data-zoom>
+        <img src="images/Zaman_Core_Bottom.png" alt="Core module, bottom view" data-zoom>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPECS ============ -->
+<section id="specs">
+  <div class="wrap reveal">
+    <span class="eyebrow">System Data</span>
+    <h2>Preliminary specs</h2>
+    <div class="specs-grid">
+
+      <div class="spec-card">
+        <header><h3>Zaman Core</h3><span class="tag">MODULE 01</span></header>
+        <dl>
+          <div class="spec-row"><dt>Processor</dt><dd>Rockchip RK3588S — 8-core 64-bit ARM CPU, up to 2.4 GHz</dd></div>
+          <div class="spec-row"><dt>Graphics</dt><dd>ARM Mali-G610 built-in 3D GPU</dd></div>
+          <div class="spec-row"><dt>Memory</dt><dd>8 GB – 16 GB fast LPDDR4x / LPDDR5</dd></div>
+          <div class="spec-row"><dt>Storage</dt><dd>128 GB – 256 GB M.2 PCIe NVMe SSD</dd></div>
+          <div class="spec-row"><dt>Cooling</dt><dd>Solid-state active cooling — whisper-quiet, sub-20 dBA</dd></div>
+          <div class="spec-row"><dt>Wireless</dt><dd>Wi-Fi 6E + Bluetooth</dd></div>
+          <div class="spec-row"><dt>Connector</dt><dd>Durable high-speed interface at PCIe Gen 4 speeds — future-proofed</dd></div>
+        </dl>
+      </div>
+
+      <div class="spec-card">
+        <header><h3>Zaman Wing</h3><span class="tag">MODULE 02</span></header>
+        <dl>
+          <div class="spec-row"><dt>Display</dt><dd>6&Prime; OLED, 120 Hz</dd></div>
+          <div class="spec-row"><dt>Battery</dt><dd>6000 mAh</dd></div>
+          <div class="spec-row"><dt>Controls</dt><dd>Hall-effect thumbsticks (zero stick drift), quiet face buttons, HD haptics</dd></div>
+          <div class="spec-row"><dt>Ergonomics</dt><dd>Adult-sized grips for hours of comfortable, cramp-free play</dd></div>
+        </dl>
+      </div>
+
+      <div class="spec-card wide">
+        <header><h3>Zaman Nest</h3><span class="tag">MODULE 03</span></header>
+        <dl>
+          <div class="spec-row"><dt>Cooling</dt><dd>Additional cooling that unlocks the processor's full TDP</dd></div>
+          <div class="spec-row">
+            <dt>I/O</dt>
+            <dd>
+              <ul class="io-list">
+                <li>1× USB-C (full-featured)</li>
+                <li>2× USB 3.0 Type-A</li>
+                <li>2× USB 2.0 Type-A</li>
+                <li>1× HDMI</li>
+                <li>1× DisplayPort</li>
+                <li>1× 1 Gbit Ethernet</li>
+                <li>1× 3.5 mm AUX</li>
+                <li>1× extra M.2 SSD slot</li>
+              </ul>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+    </div>
+    <p class="spec-note">// Specifications are preliminary and subject to change before launch.</p>
+  </div>
+</section>
+
+<!-- ============ PROGRESS ============ -->
+<section id="progress">
+  <div class="wrap reveal">
+    <span class="eyebrow">In the Lab</span>
+    <h2>Stay tuned</h2>
+    <p class="lede">Real prototyping, real progress — follow along as Zaman comes to life.</p>
+    <div class="gallery">
+      <img src="images/Zaman_Progress1.jpg" alt="Zaman prototype progress photo 1" data-zoom>
+      <img src="images/Zaman_Progress2.jpg" alt="Zaman prototype progress photo 2" data-zoom>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap reveal">
+    <span class="eyebrow">The Lab</span>
+    <h2>About Kawn Electro</h2>
+    <div class="about-grid">
+      <div>
+        <p>Kawn Electro is a solo engineering lab dedicated to modular, repairable, and long-lasting hardware. Every design decision prioritises longevity and interoperability — rejecting planned obsolescence in favour of devices that users can upgrade, repair, and reconfigure over time.</p>
+        <p>Based in Saudi Arabia, the lab is committed to open-ecosystem design principles. Whether developing consumer electronics or smart home devices, the goal remains the same: hardware that respects its owner's intelligence and investment.</p>
+      </div>
+      <div>
+        <div class="quote">Modularity is not a feature — it's a philosophy.</div>
+        <div class="about-logo">
+          <img src="images/Kawn_Electro_Logo.png" alt="Kawn Electro logo">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOUNDER ============ -->
+<section id="founder">
+  <div class="wrap reveal">
+    <div class="founder-grid">
+      <div class="founder-photo">
+        <img src="images/founder.jpeg" alt="Kadhem, founder of Kawn Electro">
+      </div>
+      <div>
+        <span class="eyebrow">The Founder</span>
+        <h2>Kadhem</h2>
+        <p>A hardware engineer and tech enthusiast with a passion for modular, repair-friendly electronics. His work spans embedded systems, smart home gadgets, and industrial devices — always driven by the belief that great hardware should grow with its user, not be replaced.</p>
+        <p>With a hands-on approach to prototyping, Kadhem brings both professional experience and maker creativity to every project at Kawn Electro.</p>
+        <span class="cred">CPCD · Certified PCB Designer (PCEA)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap reveal">
+    <span class="eyebrow" style="justify-content:center">Get in Touch</span>
+    <h2>Help shape the future of Zaman</h2>
+    <p><a class="email-link" href="mailto:kadhem.alabdulmuhsin@kawnelectro.com">kadhem.alabdulmuhsin@kawnelectro.com</a></p>
+    <p class="loc">Based in Saudi Arabia</p>
+    <div class="contact-cta">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc5cWbgayor35DVEBR7uxhy4HpG3ON7OKLDusDju3SYBmw71Q/viewform?usp=header" target="_blank" rel="noopener" class="btn">Join the waitlist</a>
+      <p>Be first in line — and tell us what your ultimate retro console looks like.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="social-links">
+    <a href="https://www.linkedin.com/in/kadhem-alabdulmuhsin-cpcd-a644959a/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/zaman.console" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+  </div>
+  <p class="copyright">© 2026 Kawn Electro · Zaman. All rights reserved.</p>
+  <p class="fineprint">Some product images are AI-generated concept renders. No copyright infringement intended.</p>
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" role="dialog" aria-label="Image preview">
+  <img id="lightbox-img" src="" alt="Zoomed image">
+</div>
+
+<script>
+// ── Mobile nav ──
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', open);
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navLinks.classList.remove('open');
+  hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+}));
+
+// ── Scroll reveal ──
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ── Active nav link ──
+const sections = [...document.querySelectorAll('section[id]')];
+const linkMap = {};
+document.querySelectorAll('.nav-links a[data-section]').forEach(a => linkMap[a.dataset.section] = a);
+const navIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && linkMap[e.target.id]) {
+      Object.values(linkMap).forEach(a => a.classList.remove('active'));
+      linkMap[e.target.id].classList.add('active');
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+sections.forEach(s => navIO.observe(s));
+
+// ── Handheld / Docked rig ──
+const rig = document.getElementById('rig');
+const caption = document.getElementById('rigCaption');
+const btnH = document.getElementById('modeHandheld');
+const btnD = document.getElementById('modeDocked');
+const captions = {
+  handheld: '<b>Handheld:</b> the Core powers the Wing — a 6\u2033 120 Hz OLED handheld.',
+  docked: '<b>Docked:</b> the Core slots into the Nest — full TDP, full I/O, big-screen play.'
+};
+function setMode(mode) {
+  rig.dataset.mode = mode;
+  btnH.setAttribute('aria-pressed', mode === 'handheld');
+  btnD.setAttribute('aria-pressed', mode === 'docked');
+  caption.innerHTML = captions[mode];
+}
+btnH.addEventListener('click', () => setMode('handheld'));
+btnD.addEventListener('click', () => setMode('docked'));
+
+// ── Lightbox ──
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+document.querySelectorAll('[data-zoom]').forEach(img => {
+  img.addEventListener('click', () => {
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightbox.classList.add('open');
+  });
+});
+lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+</script>
+</body>
+</html>
