@@ -697,7 +697,7 @@
             box-shadow: 0 0 40px rgba(232, 168, 80, 0.5);
         }
 
-        /* ── ABOUT ── */
+        /* ── ABOUT (LAB) ── */
         #about {
             background: var(--bg-void);
             border-top: 1px solid var(--border-subtle);
@@ -713,9 +713,16 @@
             flex: 2;
             min-width: 300px;
         }
-        #about .about-accent {
+        #about .about-right {
             flex: 1;
             min-width: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+        #about .about-accent {
+            width: 100%;
             background: var(--bg-card);
             padding: 2rem;
             border-left: 3px solid var(--accent-amber);
@@ -726,12 +733,9 @@
             text-shadow: 0 0 10px var(--accent-amber-soft);
         }
         #about .about-logo-container {
-            flex: 1;
-            min-width: 180px;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-top: 1rem;
         }
         #about .about-logo-container img {
             width: 100%;
@@ -859,7 +863,7 @@
             color: var(--text-muted);
         }
 
-        /* ── LIGHTBOX ── */
+        /* ── Lightbox ── */
         .lightbox {
             display: none;
             position: fixed;
@@ -1005,6 +1009,7 @@
             }
         }
     </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -1220,11 +1225,13 @@
                     electronics or smart home devices, the goal remains the same: hardware that respects its owner's intelligence and investment.
                 </p>
             </div>
-            <div class="about-accent">
-                <p style="font-size:1.05rem; margin:0;">Modularity is not a feature — it's a philosophy.</p>
-            </div>
-            <div class="about-logo-container">
-                <img src="images/Kawn_Electro_Logo.png" alt="Kawn Electro">
+            <div class="about-right">
+                <div class="about-accent">
+                    <p style="font-size:1.05rem; margin:0;">Modularity is not a feature — it's a philosophy.</p>
+                </div>
+                <div class="about-logo-container">
+                    <img src="images/Kawn_Electro_Logo.png" alt="Kawn Electro">
+                </div>
             </div>
         </div>
     </section>
