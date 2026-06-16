@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZAMAN — Modular Retro Console | Kawn Electro</title>
 <meta name="description" content="Zaman is a modular retro console for golden-age emulation up to the 128-bit generation: one swappable Core, a handheld Wing, and a desktop Nest. Designed by Kawn Electro in Saudi Arabia.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Kufi+Arabic:wght@600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/css2.css" rel="stylesheet">
 <style>
 :root{
   --solder:#100c06;          /* page background — aged espresso-black */
@@ -289,6 +289,41 @@ table.ds td ul li{padding:.1rem 0}
 table.ds td ul li::before{content:'·';color:var(--sand);margin-right:.55rem}
 .footnote{font-family:var(--font-mono);font-size:.72rem;color:var(--trace);margin-top:1rem;letter-spacing:.04em}
 
+/* ---------- pricing ---------- */
+.price-note{
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--copper);border:1px dashed var(--rule);padding:.55rem .9rem;display:inline-block;margin-bottom:1.8rem;
+}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-bottom:1.6rem}
+.price-card{
+  background:var(--mask);border:1px solid var(--rule);padding:1.6rem 1.4rem;position:relative;
+  display:flex;flex-direction:column;transition:border-color .25s,transform .25s;
+}
+.price-card:hover{border-color:var(--sand);transform:translateY(-4px)}
+.price-card.feature{border-color:var(--sand);background:linear-gradient(180deg,var(--sand-soft),var(--mask) 60%)}
+.price-card .tier{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;color:var(--copper);text-transform:uppercase;margin-bottom:.5rem}
+.price-card .name{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:1.3rem;letter-spacing:.02em;margin-bottom:.9rem}
+.price-card .amount{font-family:var(--font-display);font-weight:800;font-size:2.4rem;line-height:1;color:var(--sand)}
+.price-card .amount .cur{font-size:1.1rem;vertical-align:super;margin-right:.1em}
+.price-card.feature .amount{font-size:3rem}
+.price-card .amount .approx{font-family:var(--font-mono);font-weight:400;font-size:.9rem;color:var(--trace);vertical-align:middle;margin-right:.3em}
+.price-card .desc{font-family:var(--font-body);font-size:.9rem;color:var(--trace);margin-top:.9rem;flex-grow:1}
+.price-card .tag{
+  position:absolute;top:-1px;right:-1px;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.12em;
+  text-transform:uppercase;background:var(--sand);color:var(--solder);padding:.3rem .6rem;
+}
+.price-card .card-art{
+  position:absolute;top:1.3rem;right:1.3rem;width:54px;height:40px;
+  fill:none;stroke:var(--sand);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
+  opacity:.28;transition:opacity .25s;
+}
+.price-card:hover .card-art{opacity:.6}
+.price-card.feature .card-art{opacity:.4;top:2.1rem}
+.price-card.feature:hover .card-art{opacity:.75}
+.price-ladder{font-family:var(--font-mono);font-size:.8rem;color:var(--trace);line-height:1.9;border-top:1px solid var(--rule);padding-top:1.2rem}
+.price-ladder b{color:var(--silk);font-weight:500}
+@media (max-width:820px){.price-grid{grid-template-columns:1fr}}
+
 /* ---------- progress ---------- */
 .gallery{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
 .gallery figure{background:var(--mask);border:1px solid var(--rule);padding:1rem}
@@ -392,13 +427,14 @@ footer .fine a:hover{text-decoration:underline}
 
 <!-- ================= HEADER ================= -->
 <header class="topbar">
-  <a href="#home" class="brand"><img src="images/Kawn_Electro_Logo.png" alt="Kawn Electro" onerror="this.style.display='none'"></a>
+  <a href="#home" class="brand"><img src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/Kawn_Electro_Logo.png" alt="Kawn Electro" onerror="this.style.display='none'"></a>
   <span class="doc-id">DOC ZAMAN-001 · REV A · 2026</span>
   <ul class="nav" id="nav">
     <li><a href="#home" data-section="home" class="active">Home</a></li>
     <li><a href="#why" data-section="why">Why</a></li>
     <li><a href="#system" data-section="system">System</a></li>
     <li><a href="#specs" data-section="specs">Specs</a></li>
+    <li><a href="#pricing" data-section="pricing">Pricing</a></li>
     <li><a href="#progress" data-section="progress">Progress</a></li>
     <li><a href="#lab" data-section="lab">Lab</a></li>
     <li><a href="#contact" data-section="contact">Contact</a></li>
@@ -410,7 +446,7 @@ footer .fine a:hover{text-decoration:underline}
 <!-- ================= HERO ================= -->
 <section id="home">
   <div class="inner hero-grid">
-    <div class="hero-copy reveal">
+    <div class="hero-copy reveal visible">
       <div class="hero-text">
         <span class="eyebrow">ZAMAN-001 · Modular retro console · Kawn Electro</span>
         <h1>Built to outlast<br><span class="accent">its generation.</span></h1>
@@ -425,7 +461,7 @@ footer .fine a:hover{text-decoration:underline}
       </div>
       <div class="hero-side">
         <span class="hero-arabic" aria-hidden="true">زمن</span>
-        <img class="hero-mark" src="images/Zaman_Logo.png" alt="Zaman — bird emblem" onerror="this.style.display='none'">
+        <img class="hero-mark" src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/Zaman_Logo.png" alt="Zaman — bird emblem" onerror="this.style.display='none'">
       </div>
     </div>
 
@@ -445,61 +481,61 @@ footer .fine a:hover{text-decoration:underline}
         <!-- WING (handheld, rear view) -->
         <g id="wingGroup" stroke="#f2ece0" fill="none" stroke-width="1.5">
           <!-- shoulder buttons -->
-          <rect x="92" y="112" width="58" height="11" rx="5"/>
-          <rect x="320" y="112" width="58" height="11" rx="5"/>
+          <rect x="92" y="112" width="58" height="11" rx="5"></rect>
+          <rect x="320" y="112" width="58" height="11" rx="5"></rect>
           <!-- body -->
-          <rect x="60" y="122" width="350" height="178" rx="54"/>
+          <rect x="60" y="122" width="350" height="178" rx="54"></rect>
           <!-- grip texture hints -->
-          <path d="M86 162 q-7 42 0 84 M384 162 q7 42 0 84" opacity=".4"/>
+          <path d="M86 162 q-7 42 0 84 M384 162 q7 42 0 84" opacity=".4"></path>
           <!-- vents -->
-          <path d="M120 152 h58 M120 162 h58" stroke-dasharray="3 4" opacity=".7"/>
-          <path d="M292 152 h58 M292 162 h58" stroke-dasharray="3 4" opacity=".7"/>
+          <path d="M120 152 h58 M120 162 h58" stroke-dasharray="3 4" opacity=".7"></path>
+          <path d="M292 152 h58 M292 162 h58" stroke-dasharray="3 4" opacity=".7"></path>
           <!-- rear buttons -->
-          <rect x="100" y="248" width="28" height="11" rx="4" opacity=".6"/>
-          <rect x="342" y="248" width="28" height="11" rx="4" opacity=".6"/>
+          <rect x="100" y="248" width="28" height="11" rx="4" opacity=".6"></rect>
+          <rect x="342" y="248" width="28" height="11" rx="4" opacity=".6"></rect>
           <!-- USB-C -->
-          <rect x="218" y="294" width="34" height="9" rx="4"/>
+          <rect x="218" y="294" width="34" height="9" rx="4"></rect>
           <!-- core bay (rear, square) -->
-          <rect x="190" y="160" width="90" height="90" rx="8" stroke-dasharray="6 5" stroke="#c47542"/>
+          <rect x="190" y="160" width="90" height="90" rx="8" stroke-dasharray="6 5" stroke="#c47542"></rect>
           <text x="235" y="150" text-anchor="middle" fill="#c47542" stroke="none" font-size="10" letter-spacing="2">J1 CORE BAY</text>
           <text x="235" y="343" text-anchor="middle" fill="#f2ece0" stroke="none" font-size="13" letter-spacing="3">A1 — WING (REAR)</text>
-          <text x="235" y="363" text-anchor="middle" fill="#a8997f" stroke="none" font-size="10" letter-spacing="1">6&#8243; OLED &#183; 120 Hz &#183; 6000 mAh</text>
+          <text x="235" y="363" text-anchor="middle" fill="#a8997f" stroke="none" font-size="10" letter-spacing="1">6″ OLED · 120 Hz · 6000 mAh</text>
         </g>
 
         <!-- NEST (dock, low console) -->
         <g id="nestGroup" class="chassis-dim" stroke="#f2ece0" fill="none" stroke-width="1.5">
           <!-- body -->
-          <rect x="540" y="205" width="340" height="100" rx="10"/>
+          <rect x="540" y="205" width="340" height="100" rx="10"></rect>
           <!-- seam light -->
-          <path d="M542 256 h336" stroke="#e6b25a" stroke-width="2" opacity=".85"/>
+          <path d="M542 256 h336" stroke="#e6b25a" stroke-width="2" opacity=".85"></path>
           <!-- side vents -->
-          <path d="M552 218 v76 M559 218 v76 M566 218 v76" stroke-dasharray="3 4" opacity=".55"/>
-          <path d="M854 218 v76 M861 218 v76 M868 218 v76" stroke-dasharray="3 4" opacity=".55"/>
+          <path d="M552 218 v76 M559 218 v76 M566 218 v76" stroke-dasharray="3 4" opacity=".55"></path>
+          <path d="M854 218 v76 M861 218 v76 M868 218 v76" stroke-dasharray="3 4" opacity=".55"></path>
           <!-- front ports -->
-          <rect x="690" y="276" width="18" height="11" rx="2" opacity=".8"/>
-          <rect x="716" y="276" width="18" height="11" rx="2" opacity=".8"/>
-          <rect x="742" y="276" width="26" height="9" rx="2" opacity=".8"/>
+          <rect x="690" y="276" width="18" height="11" rx="2" opacity=".8"></rect>
+          <rect x="716" y="276" width="18" height="11" rx="2" opacity=".8"></rect>
+          <rect x="742" y="276" width="26" height="9" rx="2" opacity=".8"></rect>
           <!-- power ring -->
-          <circle cx="828" cy="240" r="11"/>
-          <circle cx="828" cy="240" r="4" fill="#e6b25a" stroke="none"/>
+          <circle cx="828" cy="240" r="11"></circle>
+          <circle cx="828" cy="240" r="4" fill="#e6b25a" stroke="none"></circle>
           <!-- core bay on top (sized for the flattened slab) -->
-          <rect x="664" y="206" width="120" height="46" rx="5" stroke-dasharray="6 5" stroke="#c47542"/>
+          <rect x="664" y="206" width="120" height="46" rx="5" stroke-dasharray="6 5" stroke="#c47542"></rect>
           <text x="724" y="196" text-anchor="middle" fill="#c47542" stroke="none" font-size="10" letter-spacing="2">J2 CORE BAY</text>
           <text x="710" y="343" text-anchor="middle" fill="#f2ece0" stroke="none" font-size="13" letter-spacing="3">A2 — NEST</text>
-          <text x="710" y="363" text-anchor="middle" fill="#a8997f" stroke="none" font-size="10" letter-spacing="1">FULL TDP &#183; FULL I/O &#183; BIG-SCREEN</text>
+          <text x="710" y="363" text-anchor="middle" fill="#a8997f" stroke="none" font-size="10" letter-spacing="1">FULL TDP · FULL I/O · BIG-SCREEN</text>
         </g>
 
         <!-- CORE (movable cartridge — flattens to lie flat when docked) -->
         <g id="coreGroup" transform="translate(190,160)">
           <g id="coreSlab">
-            <rect x="0" y="0" width="90" height="90" rx="10" fill="#251e15" stroke="#e6b25a" stroke-width="1.5"/>
+            <rect x="0" y="0" width="90" height="90" rx="10" fill="#251e15" stroke="#e6b25a" stroke-width="1.5"></rect>
             <!-- seam light across slab -->
-            <path d="M8 45 h74" stroke="#e6b25a" stroke-width="2" opacity=".85" fill="none"/>
+            <path d="M8 45 h74" stroke="#e6b25a" stroke-width="2" opacity=".85" fill="none"></path>
             <!-- gold edge fingers -->
             <g fill="#c47542">
-              <rect x="16" y="82" width="6" height="8"/><rect x="27" y="82" width="6" height="8"/>
-              <rect x="38" y="82" width="6" height="8"/><rect x="49" y="82" width="6" height="8"/>
-              <rect x="60" y="82" width="6" height="8"/><rect x="71" y="82" width="6" height="8"/>
+              <rect x="16" y="82" width="6" height="8"></rect><rect x="27" y="82" width="6" height="8"></rect>
+              <rect x="38" y="82" width="6" height="8"></rect><rect x="49" y="82" width="6" height="8"></rect>
+              <rect x="60" y="82" width="6" height="8"></rect><rect x="71" y="82" width="6" height="8"></rect>
             </g>
           </g>
           <!-- silkscreen, face view (handheld) -->
@@ -512,7 +548,7 @@ footer .fine a:hover{text-decoration:underline}
         </g>
       </svg>
 
-      <p class="mode-caption" id="modeCaption" aria-live="polite">MODE A — HANDHELD: CORE SEATS IN THE WING'S REAR BAY &#183; 6&#8243; OLED &#183; 6000 mAh</p>
+      <p class="mode-caption" id="modeCaption" aria-live="polite">MODE A — HANDHELD: CORE SEATS IN THE WING'S REAR BAY · 6″ OLED · 6000 mAh</p>
     </div>
   </div>
 </section>
@@ -564,7 +600,7 @@ footer .fine a:hover{text-decoration:underline}
     <div class="modules">
       <article class="module">
         <div class="module-head"><h3>Core</h3><span class="ref">U1 · COMPUTE</span></div>
-        <figure><img src="images/Zaman_Core_Top.png" alt="Zaman Core module, isometric render" data-zoom></figure>
+        <figure><img src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/Zaman_Core_Top.png" alt="Zaman Core module, isometric render" data-zoom=""></figure>
         <div class="module-body">
           <p>The swappable brain: processor, RAM, storage, and wireless on one cartridge.
           Upgradable across generations through a high-speed, rugged connector.</p>
@@ -572,15 +608,15 @@ footer .fine a:hover{text-decoration:underline}
       </article>
       <article class="module">
         <div class="module-head"><h3>Wing</h3><span class="ref">A1 · HANDHELD</span></div>
-        <figure><img src="images/Zaman_Wing.png" alt="Zaman Wing handheld module" data-zoom onerror="this.closest('figure').innerHTML='&lt;div style=&quot;height:190px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;color:var(--trace);text-transform:uppercase;background:repeating-linear-gradient(45deg,var(--mask-2) 0 12px,var(--mask) 12px 24px)&quot;&gt;Render in progress&lt;/div&gt;'"></figure>
+        <figure><img src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/Zaman_Wing.png" alt="Zaman Wing handheld module" data-zoom="" onerror="this.closest('figure').innerHTML='<div style=&quot;height:190px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;color:var(--trace);text-transform:uppercase;background:repeating-linear-gradient(45deg,var(--mask-2) 0 12px,var(--mask) 12px 24px)&quot;>Render in progress</div>'"></figure>
         <div class="module-body">
-          <p>The handheld body: 6&#8243; 120 Hz OLED, a 6000 mAh battery, hall-effect controls,
+          <p>The handheld body: 6″ 120 Hz OLED, a 6000 mAh battery, hall-effect controls,
           and adult-sized grips for long, comfortable sessions.</p>
         </div>
       </article>
       <article class="module">
         <div class="module-head"><h3>Nest</h3><span class="ref">A2 · DOCK</span></div>
-        <figure><img src="images/Zaman_Nest.png" alt="Zaman Core seated on the Nest dock" data-zoom></figure>
+        <figure><img src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/Zaman_Nest.png" alt="Zaman Core seated on the Nest dock" data-zoom=""></figure>
         <div class="module-body">
           <p>The desktop body: a docking station with full I/O and advanced cooling that
           unlocks the processor's full performance for big-screen play.</p>
@@ -590,11 +626,11 @@ footer .fine a:hover{text-decoration:underline}
 
     <div class="core-views">
       <figure>
-        <img src="images/Zaman_Core_Top.png" alt="Core module, top view" data-zoom>
+        <img src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/Zaman_Core_Top.png" alt="Core module, top view" data-zoom="">
         <figcaption>FIG. 2A — CORE, TOP</figcaption>
       </figure>
       <figure>
-        <img src="images/Zaman_Core_Bottom.png" alt="Core module, bottom view" data-zoom>
+        <img src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/Zaman_Core_Bottom.png" alt="Core module, bottom view" data-zoom="">
         <figcaption>FIG. 2B — CORE, bottom</figcaption>
       </figure>
     </div>
@@ -613,43 +649,91 @@ footer .fine a:hover{text-decoration:underline}
     <div class="spec-block">
       <div class="block-head"><h3>Zaman Core</h3><span class="ref">U1 · COMPUTE MODULE</span></div>
       <table class="ds">
-        <tr><th scope="row">Processor</th><td>Rockchip RK3588S — 8-core 64-bit ARM CPU, up to 2.4 GHz</td></tr>
+        <tbody><tr><th scope="row">Processor</th><td>Rockchip RK3588S — 8-core 64-bit ARM CPU, up to 2.4 GHz</td></tr>
         <tr><th scope="row">Graphics</th><td>ARM Mali-G610 built-in 3D GPU</td></tr>
         <tr><th scope="row">Memory</th><td>8–16 GB LPDDR4x / LPDDR5</td></tr>
         <tr><th scope="row">Storage</th><td>128 GB – 256 GB M.2 PCIe NVMe SSD</td></tr>
         <tr><th scope="row">Cooling</th><td>Solid-state active cooling<span class="note">Whisper-quiet, sub-20 dBA</span></td></tr>
         <tr><th scope="row">Wireless</th><td>Wi-Fi 6E + Bluetooth</td></tr>
         <tr><th scope="row">Interconnect</th><td>Durable high-speed edge connector, PCIe Gen 4 speeds</td></tr>
-      </table>
+      </tbody></table>
     </div>
 
     <div class="spec-block">
       <div class="block-head"><h3>Zaman Wing</h3><span class="ref">A1 · HANDHELD MODULE</span></div>
       <table class="ds">
-        <tr><th scope="row">Display</th><td>6&#8243; OLED, 120 Hz</td></tr>
+        <tbody><tr><th scope="row">Display</th><td>6″ OLED, 120 Hz</td></tr>
         <tr><th scope="row">Battery</th><td>6000 mAh</td></tr>
         <tr><th scope="row">Controls</th><td>Hall-effect thumbsticks (zero stick drift), quiet face buttons, HD haptics</td></tr>
         <tr><th scope="row">Ergonomics</th><td>Adult-sized grips for hours of cramp-free play</td></tr>
-      </table>
+      </tbody></table>
     </div>
 
     <div class="spec-block">
       <div class="block-head"><h3>Zaman Nest</h3><span class="ref">A2 · DOCK MODULE</span></div>
       <table class="ds">
-        <tr><th scope="row">Cooling</th><td>Additional cooling unlocks the processor's full TDP</td></tr>
+        <tbody><tr><th scope="row">Cooling</th><td>Additional cooling unlocks the processor's full TDP</td></tr>
         <tr><th scope="row">I/O</th><td>
           <ul>
-            <li>1&#215; USB-C (full-featured)</li>
-            <li>2&#215; USB 3.0 Type-A &#183; 2&#215; USB 2.0 Type-A</li>
-            <li>1&#215; HDMI &#183; 1&#215; DisplayPort</li>
-            <li>1&#215; 1 Gbit Ethernet</li>
-            <li>1&#215; 3.5 mm audio</li>
-            <li>1&#215; extra M.2 SSD slot</li>
+            <li>1× USB-C (full-featured)</li>
+            <li>2× USB 3.0 Type-A · 2× USB 2.0 Type-A</li>
+            <li>1× HDMI · 1× DisplayPort</li>
+            <li>1× 1 Gbit Ethernet</li>
+            <li>1× 3.5 mm audio</li>
+            <li>1× extra M.2 SSD slot</li>
           </ul>
         </td></tr>
-      </table>
+      </tbody></table>
     </div>
     <p class="footnote">All figures are engineering targets for the first revision and may change before release.</p>
+  </div>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section id="pricing">
+  <div class="inner reveal">
+    <div class="sec-head">
+      <span class="eyebrow">ZAMAN-001 · SEC 04</span>
+      <h2>Target pricing</h2>
+      <p style="max-width:620px">These are targets, not final prices. Tell us if they're right.</p>
+    </div>
+
+    <span class="price-note">Subject to change · help us set them →</span>
+
+    <div class="price-grid">
+      <!-- Core + Wing -->
+      <div class="price-card">
+
+        <span class="tier">U1 + A1 · Core + Wing</span>
+        <span class="name">Gaming on the fly</span>
+        <div class="amount"><span class="approx">≤</span><span class="cur">$</span>270</div>
+        <p class="desc">The complete handheld — Core along with the Wing.</p>
+      </div>
+
+      <!-- Core + Wing + Nest (flagship, centered) -->
+      <div class="price-card feature">
+        <span class="tag">Full system</span>
+
+        <span class="tier">U1 + A1 + A2 · Core + Wing + Nest</span>
+        <span class="name">Play on your terms</span>
+        <div class="amount"><span class="approx">~</span><span class="cur">$</span>349</div>
+        <p class="desc">Full bundle — Core, Wing and Nest together. Handheld on the move, big-screen at the desk</p>
+      </div>
+
+      <!-- Core + Nest -->
+      <div class="price-card">
+
+        <span class="tier">U1 + A2 · Core + Nest</span>
+        <span class="name">Big screen gaming</span>
+        <div class="amount"><span class="approx">~</span><span class="cur">$</span>219</div>
+        <p class="desc">The desktop/TV console configuration. Core along with the Nest</p>
+      </div>
+    </div>
+
+    <div style="margin-top:2.2rem">
+      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSc5cWbgayor35DVEBR7uxhy4HpG3ON7OKLDusDju3SYBmw71Q/viewform?usp=header" target="_blank" rel="noopener">Tell us what you'd pay</a>
+      <a class="btn ghost" href="#system">Why three modules?</a>
+    </div>
   </div>
 </section>
 
@@ -657,17 +741,17 @@ footer .fine a:hover{text-decoration:underline}
 <section id="progress">
   <div class="inner reveal">
     <div class="sec-head">
-      <span class="eyebrow">ZAMAN-001 · SEC 04</span>
+      <span class="eyebrow">ZAMAN-001 · SEC 05</span>
       <h2>Current progress</h2>
       <p style="max-width:620px">Built in the open. Photos from the bench as the Core comes together.</p>
     </div>
     <div class="gallery">
       <figure>
-        <img src="images/Zaman_Progress1.jpg" alt="Zaman prototype progress photo 1" data-zoom onerror="this.outerHTML='&lt;div class=&quot;placeholder&quot;&gt;Bench photo · soon&lt;/div&gt;'">
+        <img src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/Zaman_Progress1.jpg" alt="Zaman prototype progress photo 1" data-zoom="" onerror="this.outerHTML='<div class=&quot;placeholder&quot;>Bench photo · soon</div>'">
         <figcaption>FIG. 3A — CORE PROTOTYPE</figcaption>
       </figure>
       <figure>
-        <img src="images/Zaman_Progress2.jpg" alt="Zaman prototype progress photo 2" data-zoom onerror="this.outerHTML='&lt;div class=&quot;placeholder&quot;&gt;Bench photo · soon&lt;/div&gt;'">
+        <img src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/Zaman_Progress2.jpg" alt="Zaman prototype progress photo 2" data-zoom="" onerror="this.outerHTML='<div class=&quot;placeholder&quot;>Bench photo · soon</div>'">
         <figcaption>FIG. 3B — CORE PROTOTYPE</figcaption>
       </figure>
     </div>
@@ -678,7 +762,7 @@ footer .fine a:hover{text-decoration:underline}
 <section id="lab">
   <div class="inner reveal">
     <div class="sec-head">
-      <span class="eyebrow">ZAMAN-001 · SEC 05</span>
+      <span class="eyebrow">ZAMAN-001 · SEC 06</span>
       <h2>The lab</h2>
     </div>
     <div class="lab-grid">
@@ -690,19 +774,19 @@ footer .fine a:hover{text-decoration:underline}
         <p>Based in Saudi Arabia, the lab is committed to open-ecosystem design. Whether the project
         is consumer electronics or smart-home devices, the goal stays the same: hardware that respects
         its owner's intelligence and investment.</p>
-        <a class="btn ghost" href="https://kawnelectro.com" target="_blank" rel="noopener" style="margin-top:.8rem">Visit kawnelectro.com &#8599;</a>
+        <a class="btn ghost" href="https://kawnelectro.com/" target="_blank" rel="noopener" style="margin-top:.8rem">Visit kawnelectro.com ↗</a>
       </div>
       <div>
         <blockquote>Modularity is not a feature — it's a philosophy.</blockquote>
         <div class="lab-logo">
-          <img src="images/Kawn_Electro_Logo.png" alt="Kawn Electro logo" onerror="this.parentElement.innerHTML='&lt;span style=&quot;font-family:var(--font-display);font-weight:800;letter-spacing:.1em;color:var(--silk)&quot;&gt;KAWN ELECTRO&lt;/span&gt;'">
+          <img src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/Kawn_Electro_Logo.png" alt="Kawn Electro logo" onerror="this.parentElement.innerHTML='<span style=&quot;font-family:var(--font-display);font-weight:800;letter-spacing:.1em;color:var(--silk)&quot;>KAWN ELECTRO</span>'">
         </div>
       </div>
     </div>
 
     <div class="founder-grid">
       <figure class="photo">
-        <img src="images/founder.jpeg" alt="Kadhem, founder of Kawn Electro" onerror="this.parentElement.innerHTML='&lt;div style=&quot;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,var(--mask-2) 0 12px,var(--mask) 12px 24px);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;color:var(--trace);text-transform:uppercase&quot;&gt;Kadhem&lt;/div&gt;&lt;figcaption style=&quot;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;color:var(--trace);margin-top:.6rem;text-transform:uppercase&quot;&gt;Kadhem — Founder&lt;/figcaption&gt;'">
+        <img src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/founder.jpeg" alt="Kadhem, founder of Kawn Electro" onerror="this.parentElement.innerHTML='<div style=&quot;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,var(--mask-2) 0 12px,var(--mask) 12px 24px);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;color:var(--trace);text-transform:uppercase&quot;>Kadhem</div><figcaption style=&quot;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;color:var(--trace);margin-top:.6rem;text-transform:uppercase&quot;>Kadhem — Founder</figcaption>'">
         <figcaption>KADHEM — FOUNDER</figcaption>
       </figure>
       <div>
@@ -721,13 +805,13 @@ footer .fine a:hover{text-decoration:underline}
 <!-- ================= CONTACT ================= -->
 <section id="contact">
   <div class="inner reveal">
-    <span class="eyebrow" style="text-align:center">ZAMAN-001 · SEC 06</span>
+    <span class="eyebrow" style="text-align:center">ZAMAN-001 · SEC 07</span>
     <h2>Get in touch</h2>
     <a class="email" href="mailto:kadhem.alabdulmuhsin@kawnelectro.com">kadhem.alabdulmuhsin@kawnelectro.com</a>
     <p class="where">BASED IN SAUDI ARABIA</p>
     <div class="cta-row">
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSc5cWbgayor35DVEBR7uxhy4HpG3ON7OKLDusDju3SYBmw71Q/viewform?usp=header" target="_blank" rel="noopener" class="btn">Join the waitlist</a>
-      <a href="https://kawnelectro.com" target="_blank" rel="noopener" class="btn ghost">Kawn Electro &#8599;</a>
+      <a href="https://kawnelectro.com/" target="_blank" rel="noopener" class="btn ghost">Kawn Electro ↗</a>
       <p class="footnote" style="margin-top:.9rem">Be first in line — and tell us what your ultimate retro console looks like.</p>
     </div>
   </div>
@@ -738,15 +822,17 @@ footer .fine a:hover{text-decoration:underline}
   <div class="inner">
     <div class="socials">
       <a href="https://www.linkedin.com/in/kadhem-alabdulmuhsin-cpcd-a644959a/" target="_blank" rel="noopener" aria-label="LinkedIn">
-        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
       </a>
       <a href="https://www.instagram.com/zaman.console" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>
       </a>
     </div>
     <p class="fine">
-      &copy; 2026 KAWN ELECTRO &#183; ZAMAN. ALL RIGHTS RESERVED. &#183; <a href="https://kawnelectro.com" target="_blank" rel="noopener">KAWNELECTRO.COM</a><br>
-      SOME PRODUCT IMAGES ARE AI-GENERATED CONCEPT RENDERS. NO COPYRIGHT INFRINGEMENT INTENDED. FINAL RENDERS WILL BE DONE BY PROFESSIONAL PRODUCT DESIGNERS
+      © 2026 KAWN ELECTRO · ZAMAN. ALL RIGHTS RESERVED. · <a href="https://kawnelectro.com/" target="_blank" rel="noopener">KAWNELECTRO.COM</a><br>
+      SOME PRODUCT IMAGES ARE AI-GENERATED CONCEPT RENDERS. NO COPYRIGHT
+ INFRINGEMENT INTENDED. FINAL RENDERS WILL BE DONE BY PROFESSIONAL 
+PRODUCT DESIGNERS
     </p>
   </div>
 </footer>
@@ -847,5 +933,7 @@ if (reduce) {
   reveals.forEach(el => revObs.observe(el));
 }
 </script>
-</body>
-</html>
+<script defer="defer" src="ZAMAN%20%E2%80%94%20Modular%20Retro%20Console%20_%20Kawn%20Electro_files/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;c692f51293264697824d14e1810716bd&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+
+</body></html>
