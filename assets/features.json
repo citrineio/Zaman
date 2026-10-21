@@ -107,7 +107,8 @@
     "title": "Stress testing and recovery",
     "status": "validation",
     "detail": "Repeat menu transitions, controller reconnect, multi-controller input, long sessions, interrupted transfers, duplicates, low storage and restart recovery. The accepted Sprint 7 baseline is entering rigorous testing.",
-    "source": "https://github.com/citrineio/zaman-sessiond/blob/main/docs/sprint7-closeout.md"
+    "source": "https://github.com/citrineio/zaman-sessiond/blob/main/docs/sprint7-closeout.md",
+    "show_in_preview": true
   },
   {
     "group": "Playing",
@@ -121,21 +122,24 @@
     "title": "Raspberry Pi 5 image",
     "status": "planned",
     "detail": "A planned Kawn-maintained preview image. Graphics, audio, controllers, emulators and recovery must be qualified on the Pi. No public Zaman image is available yet.",
-    "help": "Porting & hardware"
+    "help": "Porting & hardware",
+    "show_in_preview": true
   },
   {
     "group": "Updates",
     "title": "Packaged Zaman component updates",
     "status": "planned",
     "detail": "Versioned compatible packages, authenticated releases, visible update progress and tested repair/recovery. First scope targets Zaman components; whole-system atomic updates are separate.",
-    "help": "Updates & recovery"
+    "help": "Updates & recovery",
+    "show_in_preview": true
   },
   {
     "group": "Capture & files",
     "title": "Screenshots and a gallery",
     "status": "planned",
     "detail": "Capture still images, browse them with a controller and export them. Follows the current hardening work.",
-    "help": "Features"
+    "help": "Features",
+    "show_in_preview": true
   },
   {
     "group": "Capture & files",

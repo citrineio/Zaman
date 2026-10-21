@@ -60,6 +60,23 @@ external to the website.
 - Selecting Neon Circuit then pressing Left focuses Garden and updates the Home
   hero. Neon Circuit no longer retains a selected highlight.
 
+## Source readability and editing workflow
+
+- HTML, CSS, JavaScript and JSON formatted with Prettier 3.9.10; Python scripts
+  formatted with Black 26.10.1. No formatting package is required for normal builds.
+- Nine page bodies moved into `content/pages/`, metadata/navigation into
+  `content/pages.json`, and the shared shell and video into two HTML templates.
+- Semantic comparison of all ten pages preserves text and element/attribute
+  structure, ignoring indentation and equivalent inline style/handler formatting.
+- Build tests change homepage copy, shared footer text, metadata with quotes and
+  a preview-roadmap title; all changes reach the expected generated outputs.
+- Repeated builds are deterministic and leave the directly maintained demo intact.
+- Formatting checks, page checks and JavaScript syntax checks pass after refactoring.
+- Publication-package editing is checked locally: preview rebuilds edited content,
+  occupied ports give an actionable message, apply-edits copies source and generated
+  pages into a clean checkout, dirty checkouts are refused, and bundled push refuses
+  to omit local edits. No remote push is performed by these checks.
+
 ## Remaining validation
 
 - Physical gamepad testing: mappings, analog deadzones, shoulder navigation and

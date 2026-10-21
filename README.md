@@ -25,9 +25,17 @@ from the active pages; fonts are now served locally.
 
 ## Build and preview
 
-The committed HTML is ready to serve. To change shared content, edit
-`tools/build.py`, `templates/*.html`, `assets/features.json`, or the shared assets.
-Then regenerate and check:
+The committed HTML is ready to serve. Copy lives in readable content files,
+separate from the Python builder. Start with [EDITING.md](EDITING.md).
+
+- Page text and buttons: `content/pages/<page>.html` (`home.html` for the homepage).
+- Browser titles, descriptions and navigation labels: `content/pages.json`.
+- Shared header and footer: `templates/layout.html`.
+- Video caption and controls: `templates/media.html`.
+- Roadmap titles, details and statuses: `assets/features.json`.
+- Styling and interactive behavior: formatted `assets/*.css` and `assets/*.js`.
+
+After an edit, regenerate and check:
 
 ```sh
 python3 tools/build.py
@@ -84,8 +92,8 @@ To rebuild from four ordered interface captures with ffmpeg installed:
 python3 tools/build_video.py --frames /path/to/frames
 ```
 
-For the real hardware film, replace the MP4/poster and update `media()`'s caption
-in `tools/build.py`. Suggested sequence: controller navigation → launch a tested
+For the real hardware film, replace the MP4/poster and update the caption
+in `templates/media.html`. Suggested sequence: controller navigation → launch a tested
 game → open menu → adjust volume → resume → exit to library. Keep footage honest
 about development hardware, emulator settings and actual game performance.
 

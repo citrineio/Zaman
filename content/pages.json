@@ -1,0 +1,74 @@
+[
+  {
+    "output": "index.html",
+    "source": "pages/home.html",
+    "title": "A gaming experience worth keeping",
+    "description": "Explore Zaman, a modular retro gaming project, and try the open-source Zaman OS browser preview.",
+    "nav_label": "Home",
+    "show_in_nav": true
+  },
+  {
+    "output": "hardware.html",
+    "source": "pages/hardware.html",
+    "title": "The modular hardware",
+    "description": "Explore the Core, Wing and Nest: Zaman’s modular hardware concept, preliminary specifications and target pricing.",
+    "nav_label": "Hardware",
+    "show_in_nav": true
+  },
+  {
+    "output": "pricing.html",
+    "source": "pages/pricing.html",
+    "title": "Pricing & configurations",
+    "description": "Explore target pricing for Zaman handheld, TV and complete system configurations.",
+    "nav_label": "Pricing",
+    "show_in_nav": true
+  },
+  {
+    "output": "os.html",
+    "source": "pages/os.html",
+    "title": "Zaman OS — Play. Explore. Belong.",
+    "description": "Explore the Armbian-based Zaman OS, achieved features, development roadmap and interactive browser demo.",
+    "nav_label": "Zaman OS",
+    "show_in_nav": true
+  },
+  {
+    "output": "dukkan.html",
+    "source": "pages/dukkan.html",
+    "title": "Dukkan — Native games for Zaman",
+    "description": "Discover Dukkan, the controller-operated native Linux game storefront for Zaman. Try the preview, submit a game or contribute.",
+    "nav_label": "Dukkan",
+    "show_in_nav": true
+  },
+  {
+    "output": "development.html",
+    "source": "pages/development.html",
+    "title": "Development & roadmap",
+    "description": "A transparent roadmap of achieved, validating, planned and exploratory Zaman OS features.",
+    "nav_label": "Development",
+    "show_in_nav": true
+  },
+  {
+    "output": "contribute.html",
+    "source": "pages/contribute.html",
+    "title": "Contribute to Zaman OS",
+    "description": "Help port Zaman OS, add features, improve documentation and harden the open-source gaming environment.",
+    "nav_label": "Contribute",
+    "show_in_nav": true
+  },
+  {
+    "output": "downloads.html",
+    "source": "pages/downloads.html",
+    "title": "Images & supported hardware",
+    "description": "Track Zaman OS image availability for Dragon Q6A and the planned Raspberry Pi 5 preview.",
+    "nav_label": "Downloads",
+    "show_in_nav": true
+  },
+  {
+    "output": "lab.html",
+    "source": "pages/lab.html",
+    "title": "The lab & contact",
+    "description": "Meet Kawn Electro and Kadhem, the engineer behind Zaman.",
+    "nav_label": "The lab",
+    "show_in_nav": false
+  }
+]
