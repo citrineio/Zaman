@@ -22,12 +22,13 @@ function art(g){return g.art&&state.artwork?`<img src="assets/demo/${esc(g.art)}
 function action(label,name,cls='secondary',extra=''){return `<button class="${cls}" data-action="${name}" ${extra}>${label}</button>`;}
 function row(icon,title,detail,name,extra=''){return `<button class="menu-row" data-action="${name}" ${extra}><span class="row-icon" aria-hidden="true">${icon}</span><span><strong>${title}</strong><small>${detail}</small></span><span class="row-chevron" aria-hidden="true">›</span></button>`;}
 function notify(message){state.notifications.unshift({id:Date.now()+Math.random(),message});state.notifications=state.notifications.slice(0,20);if(!state.dnd){$('#toast').textContent='✓  '+message;$('#toast').hidden=false;clearTimeout(notify.timer);notify.timer=setTimeout(()=>$('#toast').hidden=true,4200);}if(state.menu&&state.sub==='notifications')renderMenu(false);}
-function card(g){return `<button class="game-card ${g.id===state.selected?'selected':''}" data-action="select-game" data-game="${g.id}" aria-label="${esc(g.title)} — view game">${art(g)}${state.favorites.includes(g.id)?'<span class="favorite-star" aria-label="Favorite">★</span>':''}<strong>${esc(g.title)}</strong><small>${esc(g.collection.toUpperCase())}</small></button>`;}
+function card(g){return `<button class="game-card" data-action="select-game" data-game="${g.id}" aria-label="${esc(g.title)} — view game">${art(g)}${state.favorites.includes(g.id)?'<span class="favorite-star" aria-label="Favorite">★</span>':''}<strong>${esc(g.title)}</strong><small>${esc(g.collection.toUpperCase())}</small></button>`;}
+function heroMarkup(g){return `<section class="hero-game">${g.art&&state.artwork?`<img class="hero-art" src="assets/demo/${g.art}" alt="">`:''}<div class="hero-info"><span class="eyebrow">BACK TO YOUR GAMES</span><h1>${esc(g.title)}</h1><span class="eyebrow">${esc(g.collection)}</span><p>${esc(g.description)}</p>${action(g.playable?'Play game':'View game','home-play','primary')}${action('Game details','details')}</div></section>`;}
 function renderLibrary(focusId){
  document.body.classList.toggle('reduced',state.reduced);
  $('#library-nav').innerHTML=['Home','Library','Favorites','Preferences'].map(p=>`<button data-action="page" data-page="${p}" ${p===state.page?'aria-current="page"':''}>${p}</button>`).join('');
  const g=getGame(state.selected);let content='';
- if(state.page==='Home')content=`<section class="hero-game">${g.art&&state.artwork?`<img class="hero-art" src="assets/demo/${g.art}" alt="">`:''}<div class="hero-info"><span class="eyebrow">BACK TO YOUR GAMES</span><h1>${esc(g.title)}</h1><span class="eyebrow">${esc(g.collection)}</span><p>${esc(g.description)}</p>${action(g.playable?'Play game':'View game','home-play','primary')}${action('Game details','details')}</div></section><div class="shelf-header"><h2>Recently played</h2><span>SAMPLE LIBRARY</span></div><div class="games-grid">${games().slice(0,4).map(card).join('')}</div>`;
+ if(state.page==='Home')content=`${heroMarkup(g)}<div class="shelf-header"><h2>Recently played</h2><span>SAMPLE LIBRARY</span></div><div class="games-grid">${games().slice(0,4).map(card).join('')}</div>`;
  else if(state.page==='Preferences')content=`<section class="preference-list"><h1>Library preferences</h1><p>Preview preferences are stored only in this browser.</p><label>Reduce navigation motion<input type="checkbox" data-setting="reduced" ${state.reduced?'checked':''}></label><label>Compact game grid<input type="checkbox" data-setting="compact" ${state.compact?'checked':''}></label><label>Show game artwork<input type="checkbox" data-setting="artwork" ${state.artwork?'checked':''}></label><p class="sim-label">These are library preferences. Expanded system appearance controls remain a roadmap item.</p></section>`;
  else {
  const list=games().filter(g=>(state.page!=='Favorites'||state.favorites.includes(g.id))&&(state.collection==='all'||g.collection===state.collection)&&g.title.toLowerCase().includes(state.query.toLowerCase())).sort((a,b)=>state.sort==='title'?a.title.localeCompare(b.title):b.title.localeCompare(a.title));
@@ -38,15 +39,40 @@ function renderLibrary(focusId){
 }
 function openMenu(sub,tab){
  if(!state.menu){openMenu.origin=document.activeElement;state.menu=true;$('#menu-backdrop').hidden=false;$('#system-menu').hidden=false;$('#library-shell').inert=true;$('#game-shell').inert=true;$('#system-button').setAttribute('aria-expanded','true');keys.clear();}
- if(tab)state.tab=tab;if(sub)state.sub=sub;else state.sub=state.locations[state.tab];state.locations[state.tab]=state.sub;
+ if(tab)state.tab=tab;if(sub){state.sub=sub;menuTrails[state.tab]=sub===menuRoots[state.tab]?[]:[menuRoots[state.tab]];}else state.sub=state.locations[state.tab];state.locations[state.tab]=state.sub;
  renderMenu();
 }
 function closeMenu(){state.menu=false;$('#system-menu').hidden=true;$('#menu-backdrop').hidden=true;$('#library-shell').inert=false;$('#game-shell').inert=false;$('#system-button').setAttribute('aria-expanded','false');keys.clear();renderLibrary();if(openMenu.origin?.isConnected)openMenu.origin.focus({preventScroll:true});else $('#system-button').focus({preventScroll:true});}
-function menuGo(sub){state.sub=sub;state.locations[state.tab]=sub;renderMenu();}
-function switchTab(tab){state.tab=tab;state.sub=state.locations[tab];renderMenu();}
-function back(){if(!state.menu)return;if(state.sub===state.locations[state.tab]&&['home','settings','notifications'].includes(state.sub))return closeMenu();if(state.sub==='audio')menuGo(state.tab==='Settings'?'settings':'home');else if(['transfer','artwork','store','activity','power','exit','shutdown','reboot'].includes(state.sub))menuGo('home');else if(state.sub==='display-confirm'){revertDisplay();}else menuGo('settings');}
+const menuFocus = new Map();
+const menuTrails = {Home: [], Notifications: [], Settings: []};
+const menuRoots = {Home: 'home', Notifications: 'notifications', Settings: 'settings'};
+function focusKey(el) {
+ if (!el) return '';
+ return el.id || [el.dataset.action, el.dataset.sub, el.dataset.tab, el.dataset.game, el.dataset.id, el.dataset.setting].filter(Boolean).join(':');
+}
+function focusMenuControl(el) {
+ if (!el) return;
+ el.focus({preventScroll:true});
+ el.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'});
+}
+function menuGo(sub, remember=true) {
+ if (sub !== state.sub && remember) menuTrails[state.tab].push(state.sub);
+ state.sub=sub; state.locations[state.tab]=sub; renderMenu();
+}
+function switchTab(tab,content=true){state.tab=tab;state.sub=state.locations[tab];renderMenu(content);if(!content)focusMenuControl($('#menu-tabs').querySelector(`[data-tab="${tab}"]`));}
+function back(){
+ if (!state.menu) return;
+ if (state.sub==='display-confirm') { revertDisplay(); return; }
+ const parent=menuTrails[state.tab].pop();
+ if (parent) { menuGo(parent,false); return; }
+ if (state.sub!==menuRoots[state.tab]) { menuGo(menuRoots[state.tab],false); return; }
+ closeMenu();
+}
+
 function renderMenu(focus=true){
- const focused=document.activeElement,focusAction=focused?.dataset.action,focusId=focused?.id;
+ const focused=document.activeElement;
+ const previousKey=focusKey(focused);
+ const focusScope=state.tab+'/'+state.sub;
  $('#menu-context').textContent=state.playing?'In game · Dune Runner':'Library · Browser simulation';
  $('#menu-tabs').innerHTML=['Home','Notifications','Settings'].map(t=>`<button data-action="menu-tab" data-tab="${t}" ${state.tab===t?'aria-current="page"':''}>${t}</button>`).join('');
  let body='';const sub=state.sub;
@@ -68,9 +94,12 @@ function renderMenu(focus=true){
  if(sub==='power')body+=row('⏻','Shutdown','Show confirmation','sub','data-sub="shutdown"')+row('↻','Reboot','Show confirmation','sub','data-sub="reboot"')+`<button class="menu-row" disabled><span class="row-icon">☾</span><span><strong>Sleep</strong><small>Coming soon</small></span></button>`;
  if(['exit','shutdown','reboot'].includes(sub))body+=`<h3>${sub==='exit'?'Exit this game?':sub==='shutdown'?'Shut down Zaman?':'Restart Zaman?'}</h3><p>${sub==='exit'?'The sample game session will end.':'This is a preview: your computer will stay on.'}</p>${action('Cancel','back','primary')}${action(sub==='exit'?'Exit Game':'Confirm preview action',sub==='exit'?'exit-game':'fake-power')}`;
  $('#menu-content').innerHTML=body;
- if(focus){const target=$('#menu-content .menu-row:not(:disabled)')||$('#menu-content button')||$('#menu-tabs button');target?.focus({preventScroll:true});}
- else if(focusId&&$('#'+focusId))$('#'+focusId).focus({preventScroll:true});
- else if(focusAction)$('#menu-content')?.querySelector(`[data-action="${focusAction}"]`)?.focus({preventScroll:true});
+ const controls=[...$('#menu-content').querySelectorAll('button:not(:disabled),input,select,a[href]')];
+ const token=focus ? menuFocus.get(focusScope) : previousKey;
+ const target=(focus?controls:visibleControls($('#system-menu'))).find(el=>focusKey(el)===token);
+ if (focus) focusMenuControl(target || controls.find(el=>!el.classList.contains('menu-back')) || controls[0]);
+ else if (target) focusMenuControl(target);
+
 }
 function transferBody(){let s=`<h3>Transfer Games</h3><p class="sim-label">Sample transfer · no files uploaded</p>`;
  if(state.transfer==='idle')return s+`<div class="setting-box"><b>Zaman is ready to receive</b><p>On the actual OS, send files using a stock LocalSend client. Here, use the sample below.</p><p>Pocket Voyage.gba · 8 MB · From sample phone</p>${action('Send sample game','receive','primary')}</div>`;
@@ -87,7 +116,7 @@ let receiveTimer,scrapeTimer,installTimer,displayTimer;
 function receive(){if(state.transfer!=='idle')return;state.transfer='receiving';state.receive=0;renderMenu();receiveTimer=setInterval(()=>{state.receive=Math.min(100,state.receive+10);if(state.receive===100){clearInterval(receiveTimer);state.transfer='destination';notify('Sample game received · choose its destination');}if(state.menu&&state.sub==='transfer')renderMenu(false);},320);}
 function scrape(){if(!state.imported||state.scrape==='running')return;state.scrape='running';state.lookup=0;renderMenu();scrapeTimer=setInterval(()=>{state.lookup=Math.min(100,state.lookup+10);if(state.lookup===100){clearInterval(scrapeTimer);state.scrape='complete';state.scraped=true;state.tasks.artwork=true;persist();notify('Artwork & game info ready · Pocket Voyage');if(!state.menu)renderLibrary();}if(state.menu&&state.sub==='artwork')renderMenu(false);},300);}
 function install(){if(state.installing)return;state.installing=true;state.storeProgress=0;renderMenu();installTimer=setInterval(()=>{state.storeProgress=Math.min(100,state.storeProgress+10);if(state.storeProgress===100){clearInterval(installTimer);state.installing=false;state.installed=['ember'];persist();notify('Ember Trail installed · added to Native games');if(!state.menu)renderLibrary();}if(state.menu&&['store','activity'].includes(state.sub))renderMenu(false);},400);}
-function revertDisplay(){clearInterval(displayTimer);state.previewResolution=null;menuGo('display');}
+function revertDisplay(){clearInterval(displayTimer);state.previewResolution=null;if(menuTrails[state.tab].at(-1)==='display')menuTrails[state.tab].pop();menuGo('display',false);}
 function modal(html){$('#modal').innerHTML=html;$('#modal').showModal();}
 function details(id){const g=getGame(id);state.selected=g.id;modal(`<h2 id="modal-title">${esc(g.title)}</h2>${g.art?`<img class="detail-art" src="assets/demo/${g.art}" alt="${esc(g.title)} sample art">`:''}<p>${esc(g.description)}</p><p class="sim-label">Fictional sample title · ${g.playable?'playable browser mini-game':'library illustration'}</p>${action(g.playable?'Play game':'Play Dune Runner sample','play','primary')}${action(state.favorites.includes(g.id)?'★ Remove favorite':'☆ Add favorite','favorite','secondary',`data-game="${g.id}"`)}${action('Back','close-modal')}`);}
 function help(){modal(`<h2 id="modal-title">Take the controls.</h2><p>Explore freely, or try these three short tasks. System actions and titles are illustrative; Dune Runner is an original playable browser mini-game.</p><div class="controls-table"><div><kbd>Arrows</kbd> Navigate / move</div><div><kbd>Enter</kbd> Select</div><div><kbd>M</kbd> Open / close system menu</div><div><kbd>Esc</kbd> Back / open menu in game</div><div><kbd>Q / E</kbd> Previous / next tab</div><div><kbd>Space</kbd> Jump in game</div></div><ol class="tour-tasks"><li class="${state.tasks.play?'done':''}">Play Dune Runner and open the menu.</li><li class="${state.tasks.transfer?'done':''}">Transfer and import Pocket Voyage.</li><li class="${state.tasks.artwork?'done':''}">Retrieve its artwork, then find it in Library.</li></ol><p>Mouse and touch work throughout. For a connected standard gamepad: D-pad to move, south button to select/jump, east button to go back, shoulders for tabs and Start to toggle the menu.</p>${action('Start exploring','close-modal','primary')}${action('Try a sample transfer','tour-transfer')}`);sessionStorageSafe('zaman-tour-seen','1');}
@@ -117,9 +146,9 @@ function doAction(a,el){switch(a){
  case 'dismiss-notice':state.notifications=state.notifications.filter(n=>String(n.id)!==el.dataset.id);renderMenu();break;
  case 'clear-notices':state.notifications=[];renderMenu();break;
  case 'preview-display':{state.previewResolution=$('#display-mode').value;menuGo('display-confirm');let seconds=10;clearInterval(displayTimer);displayTimer=setInterval(()=>{seconds--;if(!seconds)return revertDisplay();if($('#display-countdown'))$('#display-countdown').textContent=`Reverting automatically in ${seconds} seconds.`;},1000);break;}
- case 'keep-display':clearInterval(displayTimer);state.resolution=state.previewResolution;state.previewResolution=null;menuGo('display');notify('Preview display mode confirmed');break;
+ case 'keep-display':clearInterval(displayTimer);state.resolution=state.previewResolution;revertDisplay();notify('Preview display mode confirmed');break;
  case 'revert-display':revertDisplay();break;
- case 'exit-game':state.playing=false;state.sub='home';state.locations.Home='home';state.tab='Home';closeMenu();$('#game-shell').hidden=true;$('#library-shell').hidden=false;state.selected='dune';renderLibrary();notify('Returned to library');break;
+ case 'exit-game':state.playing=false;state.sub='home';state.locations.Home='home';menuTrails.Home=[];state.tab='Home';closeMenu();$('#game-shell').hidden=true;$('#library-shell').hidden=false;state.selected='dune';renderLibrary();notify('Returned to library');break;
  case 'fake-power':notify('Preview action complete · your computer is unchanged');closeMenu();break;
  case 'steam':modal('<h2 id="modal-title">Steam integration</h2><p>The Q6A prototype exports installed Steam games to Pegasus and manages launch/return while keeping Steam alive. Compatibility is game- and platform-specific.</p><p>This browser preview does not run Steam or emulate a PC.</p><a href="development.html">Read the feature status →</a>'+action('Back','close-modal'));break;
  case 'help':help();break;
@@ -140,17 +169,76 @@ document.addEventListener('change',e=>{
  if(e.target.id==='audio-output'){state.output=e.target.value;persist();notify('Audio output changed · '+state.output);}
 });
 $('#menu-backdrop').addEventListener('click',closeMenu);$('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))$('#modal').close();});
-// Geometric focus navigation works with the same buttons exposed to pointer users.
-function moveFocus(dx,dy){const root=$('#modal').open?$('#modal'):state.menu?$('#system-menu'):$('#library-shell');const nodes=[...root.querySelectorAll('button:not(:disabled),a[href],input,select')].filter(n=>n.getClientRects().length&&!n.closest('[hidden]'));const current=document.activeElement;if(!nodes.includes(current)){nodes[0]?.focus();return;}const a=current.getBoundingClientRect(),ax=a.x+a.width/2,ay=a.y+a.height/2;const choices=nodes.filter(n=>n!==current).map(n=>{const b=n.getBoundingClientRect(),x=b.x+b.width/2-ax,y=b.y+b.height/2-ay;const forward=dx?x*dx:y*dy,side=dx?Math.abs(y):Math.abs(x);return{n,forward,score:forward+side*3};}).filter(n=>n.forward>5).sort((a,b)=>a.score-b.score);choices[0]?.n.focus();}
+// One navigation model for keyboard and gamepad. Menu content is a vertical list;
+// tabs are horizontal; range/select controls reserve Left/Right for their value.
+function visibleControls(root) {
+ return [...root.querySelectorAll('button:not(:disabled),a[href],input,select')]
+  .filter(el=>el.getClientRects().length && !el.closest('[hidden]'));
+}
+function adjustValue(el,delta) {
+ if (el?.type==='range') {
+  el.value=String(Math.max(Number(el.min),Math.min(Number(el.max),Number(el.value)+delta*Number(el.step||2))));
+  el.dispatchEvent(new Event('input',{bubbles:true})); return true;
+ }
+ if (el?.tagName==='SELECT') {
+  el.selectedIndex=Math.max(0,Math.min(el.options.length-1,el.selectedIndex+delta));
+  el.dispatchEvent(new Event('change',{bubbles:true})); return true;
+ }
+ return false;
+}
+function moveFocus(dx,dy) {
+ const active=document.activeElement;
+ if (state.menu && !$('#modal').open) {
+  if (dx && adjustValue(active,dx)) return;
+  if (active.closest('#menu-tabs')) {
+   if(dx){const tabs=['Home','Notifications','Settings'];switchTab(tabs[(tabs.indexOf(state.tab)+dx+3)%3],false);}
+   else if(dy>0){const all=visibleControls($('#menu-content'));focusMenuControl(all.find(el=>focusKey(el)===menuFocus.get(state.tab+'/'+state.sub)) || all.find(el=>!el.classList.contains('menu-back')) || all[0]);}
+   return;
+  }
+  const rows=visibleControls($('#menu-content'));
+  const at=rows.indexOf(active);
+  if(dy){
+   if(at<0){focusMenuControl(rows[0]);return;}
+   if(at===0&&dy<0){focusMenuControl($('#menu-tabs [aria-current=page]'));return;}
+   focusMenuControl(rows[Math.max(0,Math.min(rows.length-1,at+dy))]);return;
+  }
+  if(dx<0){back();return;}
+  if(dx>0&&active.matches('.menu-row[data-action=sub]'))active.click();
+  return;
+ }
+ const root=$('#modal').open?$('#modal'):$('#library-shell');
+ const nodes=visibleControls(root);
+ if(!nodes.includes(active)){nodes[0]?.focus();return;}
+ const r=active.getBoundingClientRect();
+ const ax=r.x+r.width/2, ay=r.y+r.height/2;
+ const candidates=nodes.filter(n=>n!==active).map(n=>{
+  const q=n.getBoundingClientRect();
+  const x=q.x+q.width/2-ax, y=q.y+q.height/2-ay;
+  const forward=dx?x*dx:y*dy;
+  const overlap=dx?Math.min(r.bottom,q.bottom)-Math.max(r.top,q.top):Math.min(r.right,q.right)-Math.max(r.left,q.left);
+  return {n,forward,overlap,side:dx?Math.abs(y):Math.abs(x)};
+ }).filter(n=>n.forward>4);
+ const aligned=candidates.filter(n=>n.overlap>4);
+ (aligned.length?aligned:candidates).sort((a,b)=>a.forward+a.side*.3-b.forward-b.side*.3)[0]?.n.focus();
+}
+document.addEventListener('pointermove',()=>document.body.classList.remove('keyboard-nav'));
+document.addEventListener('pointerover',e=>{const el=e.target.closest('.game-card,.menu-row:not(:disabled)');if(el&&!document.body.classList.contains('keyboard-nav'))el.focus({preventScroll:true});});
+document.addEventListener('focusin',e=>{
+ const card=e.target.closest('.game-card');
+ if(card&&state.page==='Home'&&state.selected!==card.dataset.game){state.selected=card.dataset.game;const hero=$('.hero-game');if(hero)hero.outerHTML=heroMarkup(getGame(state.selected));}
+ if(state.menu&&e.target.closest('#menu-content'))menuFocus.set(state.tab+'/'+state.sub,focusKey(e.target));
+});
 const keys=new Set();
 document.addEventListener('keydown',e=>{
- const typing=e.target.matches('input,textarea,select');if(typing&&e.key!=='Escape')return;
+ document.body.classList.add('keyboard-nav');
+ const typing=e.target.matches('textarea,input:not([type=range]):not([type=checkbox])');if(typing&&e.key!=='Escape')return;
  if(e.key==='Escape'){e.preventDefault();keys.clear();if($('#modal').open)return $('#modal').close();if(state.menu)return back();if(state.playing)return openMenu();state.page='Home';renderLibrary();return;}
  if(e.key.toLowerCase()==='m'&&!e.repeat&&!$('#modal').open){e.preventDefault();state.menu?closeMenu():openMenu();if(state.playing)state.tasks.play=true;return;}
+ if(state.menu&&e.key==='Enter'&&(e.target.type==='checkbox'||e.target.tagName==='SELECT')){e.preventDefault();if(e.target.type==='checkbox')e.target.click();else adjustValue(e.target,1);return;}
  if(state.menu&&e.key==='Tab'){const n=[...$('#system-menu').querySelectorAll('button:not(:disabled),input,select,a[href]')].filter(n=>n.getClientRects().length);if(!n.length)return;const first=n[0],last=n[n.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}return;}
  if(state.playing&&!state.menu&&!$('#modal').open){if(['ArrowLeft','ArrowRight',' ','ArrowUp'].includes(e.key)){e.preventDefault();keys.add(e.key);if((e.key===' '||e.key==='ArrowUp')&&!e.repeat)jump();}return;}
  if(['q','e'].includes(e.key.toLowerCase())&&!$('#modal').open&&!e.repeat){e.preventDefault();const tabs=state.menu?['Home','Notifications','Settings']:['Home','Library','Favorites','Preferences'];const at=tabs.indexOf(state.menu?state.tab:state.page);const next=tabs[(at+(e.key.toLowerCase()==='e'?1:tabs.length-1))%tabs.length];if(state.menu)switchTab(next);else{state.page=next;renderLibrary(`[data-page="${next}"]`);}return;}
- if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){if(e.target.type==='range'&&['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();moveFocus(e.key==='ArrowLeft'?-1:e.key==='ArrowRight'?1:0,e.key==='ArrowUp'?-1:e.key==='ArrowDown'?1:0);}
+ if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){if(!state.menu&&(e.target.type==='range'||e.target.tagName==='SELECT'))return;e.preventDefault();moveFocus(e.key==='ArrowLeft'?-1:e.key==='ArrowRight'?1:0,e.key==='ArrowUp'?-1:e.key==='ArrowDown'?1:0);}
 });
 document.addEventListener('keyup',e=>keys.delete(e.key));window.addEventListener('blur',()=>{keys.clear();if(state.playing&&!state.menu)openMenu();});document.addEventListener('visibilitychange',()=>{keys.clear();if(document.hidden&&state.playing&&!state.menu)openMenu();});
 // Original canvas platformer, no ROM, emulator or external game runtime.
@@ -164,9 +252,9 @@ function draw(t){const w=1280,h=720;ctx.fillStyle='#111e2d';ctx.fillRect(0,0,w,h
 function frame(t){const dt=Math.min((t-lastFrame)/1000||0,.035);lastFrame=t;if(state.playing){if(!state.menu&&!document.hidden&&!$('#modal').open)update(dt);draw(t);}pollGamepad(t);requestAnimationFrame(frame);}requestAnimationFrame(frame);
 $$('[data-control]').forEach(b=>{const control=b.dataset.control;const down=e=>{e.preventDefault();b.setPointerCapture(e.pointerId);if(control==='jump')jump();else keys.add(control==='left'?'ArrowLeft':'ArrowRight');};const up=()=>{keys.delete(control==='left'?'ArrowLeft':'ArrowRight');};b.addEventListener('pointerdown',down);b.addEventListener('pointerup',up);b.addEventListener('pointercancel',up);b.addEventListener('lostpointercapture',up);});
 let padHeld={},padLast=0;
-function pollGamepad(t){let pads;try{pads=navigator.getGamepads?.();}catch{return;}const p=pads&&[...pads].find(p=>p&&p.mapping==='standard');if(!p){padHeld={};return;}const active={left:p.buttons[14]?.pressed||p.axes[0]<-.55,right:p.buttons[15]?.pressed||p.axes[0]>.55,up:p.buttons[12]?.pressed||p.axes[1]<-.55,down:p.buttons[13]?.pressed||p.axes[1]>.55,accept:p.buttons[0]?.pressed,back:p.buttons[1]?.pressed,menu:p.buttons[9]?.pressed,prev:p.buttons[4]?.pressed,next:p.buttons[5]?.pressed};const newPress=k=>active[k]&&!padHeld[k];if(state.playing&&!state.menu&&!$('#modal').open){if(active.left)keys.add('ArrowLeft');else keys.delete('ArrowLeft');if(active.right)keys.add('ArrowRight');else keys.delete('ArrowRight');if(newPress('accept'))jump();}else if(t-padLast>180){const f=document.activeElement;if(f?.type==='range'&&(active.left||active.right)){f.value=String(Math.max(Number(f.min),Math.min(Number(f.max),Number(f.value)+(active.right?2:-2))));f.dispatchEvent(new Event('input',{bubbles:true}));}else{if(active.left)moveFocus(-1,0);if(active.right)moveFocus(1,0);}if(active.up)moveFocus(0,-1);if(active.down)moveFocus(0,1);if(active.left||active.right||active.up||active.down)padLast=t;}
+function pollGamepad(t){let pads;try{pads=navigator.getGamepads?.();}catch{return;}const p=pads&&[...pads].find(p=>p&&p.mapping==='standard');if(!p){padHeld={};return;}const active={left:p.buttons[14]?.pressed||p.axes[0]<-.55,right:p.buttons[15]?.pressed||p.axes[0]>.55,up:p.buttons[12]?.pressed||p.axes[1]<-.55,down:p.buttons[13]?.pressed||p.axes[1]>.55,accept:p.buttons[0]?.pressed,back:p.buttons[1]?.pressed,menu:p.buttons[9]?.pressed,prev:p.buttons[4]?.pressed,next:p.buttons[5]?.pressed};const newPress=k=>active[k]&&!padHeld[k];if(state.playing&&!state.menu&&!$('#modal').open){if(active.left)keys.add('ArrowLeft');else keys.delete('ArrowLeft');if(active.right)keys.add('ArrowRight');else keys.delete('ArrowRight');if(newPress('accept'))jump();}else if(t-padLast>180){if(active.left||active.right||active.up||active.down)document.body.classList.add('keyboard-nav');if(active.left)moveFocus(-1,0);if(active.right)moveFocus(1,0);if(active.up)moveFocus(0,-1);if(active.down)moveFocus(0,1);if(active.left||active.right||active.up||active.down)padLast=t;}
  if(newPress('menu')&&!$('#modal').open){state.menu?closeMenu():openMenu();if(state.playing)state.tasks.play=true;}
- if(newPress('accept')&&(!state.playing||state.menu||$('#modal').open))document.activeElement?.click();
+ if(newPress('accept')&&(!state.playing||state.menu||$('#modal').open)){const el=document.activeElement;if(el?.tagName==='SELECT')adjustValue(el,1);else el?.click();}
  if(newPress('back')){if($('#modal').open)$('#modal').close();else if(state.menu)back();else if(state.playing)openMenu();}
  if((newPress('prev')||newPress('next'))&&!$('#modal').open&&(!state.playing||state.menu)){const tabs=state.menu?['Home','Notifications','Settings']:['Home','Library','Favorites','Preferences'];const at=tabs.indexOf(state.menu?state.tab:state.page),next=tabs[(at+(newPress('next')?1:tabs.length-1))%tabs.length];if(state.menu)switchTab(next);else{state.page=next;renderLibrary();}}
  padHeld=active;}

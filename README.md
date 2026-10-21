@@ -8,7 +8,9 @@ No frontend framework, package installation, account service or backend is neede
 | File | Purpose |
 |---|---|
 | `index.html` | Product introduction, software feature section and embedded loop |
-| `hardware.html` | Core/Wing/Nest, interactive concept diagram, specifications and target pricing |
+| `hardware.html` | Core/Wing/Nest, interactive concept diagram, specifications; pricing has its own page |
+| `pricing.html` | Target prices and configurations |
+| `dukkan.html` | Native-game discovery, game submission and contribution calls to action |
 | `os.html` | Software experience, open foundations, interactive-demo entry points and roadmap preview |
 | `demo.html` | Interactive browser simulation and original Dune Runner mini-game |
 | `development.html` | All feature statuses, filters, milestones and prototype photos |

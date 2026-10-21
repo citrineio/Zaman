@@ -11,7 +11,7 @@
     "group": "Playing",
     "title": "Launch, return, repeat",
     "status": "working",
-    "detail": "Managed emulator and native-game sessions, a resident system menu, Resume and confirmed Exit Game. Save and pause behavior remains emulator-specific.",
+    "detail": "Managed emulator and native-game sessions, a system menu, Resume and confirmed Exit Game. Save and pause behavior remains emulator-specific.",
     "demo": "game",
     "source": "https://github.com/citrineio/zaman-sessiond"
   },

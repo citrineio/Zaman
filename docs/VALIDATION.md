@@ -2,8 +2,8 @@
 
 ## Automated checks
 
-- Python standard-library build completes and regenerates seven content pages.
-- Eight active HTML pages checked for local assets, valid internal fragments,
+- Python standard-library build completes and regenerates nine content pages.
+- Ten active HTML pages checked for local assets, valid internal fragments,
   duplicate IDs and content-page h1 structure.
 - All 26 roadmap entries have a recognized status; working features have evidence
   links.
@@ -42,6 +42,23 @@ Verified in the managed Chromium preview:
 
 Visual browser checks are not a device acceptance test. Browser-extension metadata errors observed in console output are
 external to the website.
+
+## Revision checks
+
+- Demo links open a separate browser tab, preserving the website tab; static checks
+  cover every generated demo link and its opener protection.
+- All active pages use زمان; the original incorrect spelling is rejected by checks.
+- Pricing and Dukkan have dedicated routes. Pricing is no longer embedded in Hardware.
+- Desktop Dukkan and the rebuilt footer reviewed visually. Phone-sized Dukkan and
+  Pricing layouts have 375 px content width in 375 px available width; footer reviewed
+  in its two-column phone layout.
+- Home hardware teaser shows Wing and Nest. Public copy uses system menu and
+  streamlined transfers, with plain descriptions of library and launching behavior.
+- Keyboard focus moves through vertically stacked menu controls with Up/Down;
+  Left/Right adjusts volume and output selection. Back restores the opening row.
+  Shutdown confirmation moves from Cancel to Confirm with Down.
+- Selecting Neon Circuit then pressing Left focuses Garden and updates the Home
+  hero. Neon Circuit no longer retains a selected highlight.
 
 ## Remaining validation
 

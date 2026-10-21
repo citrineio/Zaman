@@ -233,7 +233,7 @@ h2{
   border:1px solid #2c3a72;position:relative;overflow:hidden;
 }
 .wing .screen::after{
-  content:'زمن';font-family:var(--arabic);font-weight:700;color:rgba(232,183,101,.8);
+  content:'زمان';font-family:var(--arabic);font-weight:700;color:rgba(232,183,101,.8);
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   font-size:2rem;text-shadow:0 0 18px rgba(232,183,101,.5);
 }
@@ -460,7 +460,7 @@ h2{
 
 <!-- ============ HERO ============ -->
 <section id="home">
-  <span class="hero-zaman-ar" aria-hidden="true">زمن</span>
+  <span class="hero-zaman-ar" aria-hidden="true">زمان</span>
   <div class="towers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="hero-inner reveal in">
     <img src="images/Zaman_Hero.png" alt="" class="hero-logo" onerror="this.style.display='none'">

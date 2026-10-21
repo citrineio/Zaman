@@ -6,3 +6,13 @@
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 @media(min-width:651px){.games-grid{grid-template-columns:repeat(var(--columns,4),minmax(0,1fr))}}
 @media(max-width:650px){#system-menu{position:fixed;inset:0;width:100%;height:100dvh;max-height:100dvh;z-index:30}#menu-backdrop{position:fixed;z-index:29}#system-button{position:fixed;bottom:14px;right:14px;box-shadow:0 4px 20px #0008}.console-footer{padding-bottom:45px}}
+/* Focus is the highlight. A previously viewed game never retains selection paint. */
+.game-card:focus{background:linear-gradient(120deg,var(--gold),var(--caramel));color:var(--sel);border-color:var(--focus);outline:2px solid var(--focus);outline-offset:2px}
+body.keyboard-nav .game-card:hover:not(:focus){transform:none}
+#menu-content>.primary,#menu-content>.secondary,#menu-content .setting-box>.primary,#menu-content .setting-box>.secondary{display:block;width:100%;margin:10px 0 0;text-align:left}
+#menu-content .setting-box label{min-height:32px}
+#menu-content button:focus-visible,#menu-content input:focus-visible,#menu-content select:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+body.keyboard-nav .menu-row:hover:not(:focus){background:transparent;color:var(--text);border-color:transparent}
+body.keyboard-nav .menu-row:hover:not(:focus) .row-icon{color:var(--gold)}
+body.keyboard-nav .menu-row:hover:not(:focus) small,body.keyboard-nav .menu-row:hover:not(:focus) .row-chevron{color:var(--muted)}
+#menu-tabs button:focus{border-color:var(--focus);color:var(--gold)}
