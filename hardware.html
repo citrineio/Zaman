@@ -1,0 +1,254 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The modular hardware | Zaman · Kawn Electro</title><meta name="description" content="Explore the Core, Wing and Nest: Zaman’s modular hardware concept, preliminary specifications and target pricing."><meta name="theme-color" content="#100c06"><meta property="og:title" content="The modular hardware | Zaman"><meta property="og:description" content="Explore the Core, Wing and Nest: Zaman’s modular hardware concept, preliminary specifications and target pricing."><meta property="og:type" content="website"><link rel="icon" href="assets/bird.webp"><link rel="stylesheet" href="assets/site.css"><script defer src="assets/site.js"></script></head><body><a class="skip-link" href="#main">Skip to content</a><header class="topbar"><a class="brand" href="index.html" aria-label="Zaman home"><img src="assets/wordmark.webp" alt="Zaman"></a><ul class="nav" id="nav"><li><a href="index.html">Home</a></li><li><a href="hardware.html" aria-current="page" class="active">Hardware</a></li><li><a href="os.html">Zaman OS</a></li><li><a href="development.html">Development</a></li><li><a href="contribute.html">Contribute</a></li><li><a href="downloads.html">Downloads</a></li></ul><a class="nav-cta" href="demo.html">Try the demo ↗</a><button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button></header><main id="main"><section class="page-hero"><div class="inner"><span class="eyebrow">The device · In development</span><h1>One Core.<br>More ways to play.</h1><p class="hero-sub">A swappable compute module, a handheld body and a TV dock. Explore the hardware we are developing around Zaman OS.</p><div><a class="btn" href="https://forms.gle/H6SiFKKwsqFf7kAG9">Follow development</a><a class="btn ghost" href="os.html">See the working software</a></div></div></section><section><div class="inner">    <!-- signature: interactive core-swap schematic -->
+    <div class="schematic" aria-label="Interactive diagram: the Core module moving between the Wing handheld and the Nest dock">
+      <div class="plate">
+        <span>FIG. 1 — CORE INTERCHANGE</span>
+        <div class="mode-toggle" role="group" aria-label="Select mode">
+          <button id="btnHandheld" aria-pressed="true">Handheld</button>
+          <button id="btnDocked" aria-pressed="false">Docked</button>
+        </div>
+      </div>
+
+      <svg id="figSvg" viewBox="0 0 920 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="figTitle">
+        <title id="figTitle">The Zaman Core sliding between the Wing handheld's rear bay and the Nest dock's top bay</title>
+
+        <!-- WING (handheld, rear view) -->
+        <g id="wingGroup" stroke="#f2ece0" fill="none" stroke-width="1.5">
+          <!-- shoulder buttons -->
+          <rect x="92" y="112" width="58" height="11" rx="5"></rect>
+          <rect x="320" y="112" width="58" height="11" rx="5"></rect>
+          <!-- body -->
+          <rect x="60" y="122" width="350" height="178" rx="54"></rect>
+          <!-- grip texture hints -->
+          <path d="M86 162 q-7 42 0 84 M384 162 q7 42 0 84" opacity=".4"></path>
+          <!-- vents -->
+          <path d="M120 152 h58 M120 162 h58" stroke-dasharray="3 4" opacity=".7"></path>
+          <path d="M292 152 h58 M292 162 h58" stroke-dasharray="3 4" opacity=".7"></path>
+          <!-- rear buttons -->
+          <rect x="100" y="248" width="28" height="11" rx="4" opacity=".6"></rect>
+          <rect x="342" y="248" width="28" height="11" rx="4" opacity=".6"></rect>
+          <!-- USB-C -->
+          <rect x="218" y="294" width="34" height="9" rx="4"></rect>
+          <!-- core bay (rear, square) -->
+          <rect x="190" y="160" width="90" height="90" rx="8" stroke-dasharray="6 5" stroke="#c47542"></rect>
+          <text x="235" y="150" text-anchor="middle" fill="#c47542" stroke="none" font-size="10" letter-spacing="2">J1 CORE BAY</text>
+          <text x="235" y="343" text-anchor="middle" fill="#f2ece0" stroke="none" font-size="13" letter-spacing="3">A1 — WING (REAR)</text>
+          <text x="235" y="363" text-anchor="middle" fill="#a8997f" stroke="none" font-size="10" letter-spacing="1">6″ OLED · 120 Hz · 6000 mAh</text>
+        </g>
+
+        <!-- NEST (dock, low console) -->
+        <g id="nestGroup" class="chassis-dim" stroke="#f2ece0" fill="none" stroke-width="1.5">
+          <!-- body -->
+          <rect x="540" y="205" width="340" height="100" rx="10"></rect>
+          <!-- seam light -->
+          <path d="M542 256 h336" stroke="#e6b25a" stroke-width="2" opacity=".85"></path>
+          <!-- side vents -->
+          <path d="M552 218 v76 M559 218 v76 M566 218 v76" stroke-dasharray="3 4" opacity=".55"></path>
+          <path d="M854 218 v76 M861 218 v76 M868 218 v76" stroke-dasharray="3 4" opacity=".55"></path>
+          <!-- front ports -->
+          <rect x="690" y="276" width="18" height="11" rx="2" opacity=".8"></rect>
+          <rect x="716" y="276" width="18" height="11" rx="2" opacity=".8"></rect>
+          <rect x="742" y="276" width="26" height="9" rx="2" opacity=".8"></rect>
+          <!-- power ring -->
+          <circle cx="828" cy="240" r="11"></circle>
+          <circle cx="828" cy="240" r="4" fill="#e6b25a" stroke="none"></circle>
+          <!-- core bay on top (sized for the flattened slab) -->
+          <rect x="664" y="206" width="120" height="46" rx="5" stroke-dasharray="6 5" stroke="#c47542"></rect>
+          <text x="724" y="196" text-anchor="middle" fill="#c47542" stroke="none" font-size="10" letter-spacing="2">J2 CORE BAY</text>
+          <text x="710" y="343" text-anchor="middle" fill="#f2ece0" stroke="none" font-size="13" letter-spacing="3">A2 — NEST</text>
+          <text x="710" y="363" text-anchor="middle" fill="#a8997f" stroke="none" font-size="10" letter-spacing="1">FULL TDP · FULL I/O · BIG-SCREEN</text>
+        </g>
+
+        <!-- CORE (movable cartridge — flattens to lie flat when docked) -->
+        <g id="coreGroup" transform="translate(190,160)">
+          <g id="coreSlab">
+            <rect x="0" y="0" width="90" height="90" rx="10" fill="#251e15" stroke="#e6b25a" stroke-width="1.5"></rect>
+            <!-- seam light across slab -->
+            <path d="M8 45 h74" stroke="#e6b25a" stroke-width="2" opacity=".85" fill="none"></path>
+            <!-- gold edge fingers -->
+            <g fill="#c47542">
+              <rect x="16" y="82" width="6" height="8"></rect><rect x="27" y="82" width="6" height="8"></rect>
+              <rect x="38" y="82" width="6" height="8"></rect><rect x="49" y="82" width="6" height="8"></rect>
+              <rect x="60" y="82" width="6" height="8"></rect><rect x="71" y="82" width="6" height="8"></rect>
+            </g>
+          </g>
+          <!-- silkscreen, face view (handheld) -->
+          <g id="coreText">
+            <text x="45" y="34" text-anchor="middle" fill="#e6b25a" font-size="13" letter-spacing="3">ZAMAN</text>
+            <text x="45" y="66" text-anchor="middle" fill="#a8997f" font-size="9" letter-spacing="2">U1 CORE</text>
+          </g>
+          <!-- silkscreen, flat view (docked) -->
+          <text id="coreTextH" x="45" y="72" text-anchor="middle" fill="#e6b25a" font-size="9" letter-spacing="2">U1 CORE</text>
+        </g>
+      </svg>
+
+      <p class="mode-caption" id="modeCaption" aria-live="polite">MODE A — HANDHELD: CORE SEATS IN THE WING'S REAR BAY · 6″ OLED · 6000 mAh</p>
+    </div>
+</div></section><section id="why">
+  <div class="inner">
+    <div class="sec-head">
+      <span class="eyebrow">ZAMAN-001 · SEC 01</span>
+      <h2>Why modular</h2>
+      <p style="max-width:620px">Three design principles, stated up front the way a datasheet states its operating conditions.</p>
+    </div>
+    <div class="principles">
+      <article class="principle">
+        <span class="ref">P-01 · ECONOMICS</span>
+        <h3>Upgrade the Core, keep the rest</h3>
+        <p>Screens, batteries, and controls outlast processors by years. With Zaman you keep the high-quality
+        display, controller, and dock you paid for, and swap only the Core when a faster generation arrives.</p>
+      </article>
+      <article class="principle">
+        <span class="ref">P-02 · ATTENTION</span>
+        <h3>Boots into your games</h3>
+        <p>An Armbian-based Linux gaming environment with a controller-operated library, an integrated system menu and useful notifications. Built around getting back to your games.</p>
+      </article>
+      <article class="principle">
+        <span class="ref">P-03 · OPENNESS</span>
+        <h3>Yours to tinker</h3>
+        <p>Zaman embraces open-source operating systems and emulation frontends. Tune your ultimate
+        retro setup the way you want it, free of corporate software restrictions.</p>
+      </article>
+    </div>
+  </div>
+</section><section id="system">
+  <div class="inner">
+    <div class="sec-head">
+      <span class="eyebrow">ZAMAN-001 · SEC 02</span>
+      <h2>The system</h2>
+      <p style="max-width:620px">Three modules. One connector. Designed for longevity, repairability,
+      and cost-effective upgrades across generations.</p>
+    </div>
+
+    <div class="modules">
+      <article class="module">
+        <div class="module-head"><h3>Core</h3><span class="ref">U1 · COMPUTE</span></div>
+        <figure><img src="assets/Zaman_Core_Top.webp" alt="Zaman Core module, isometric render" data-zoom=""></figure>
+        <div class="module-body">
+          <p>The swappable brain: processor, RAM, storage, and wireless on one cartridge.
+          Upgradable across generations through a high-speed, rugged connector.</p>
+        </div>
+      </article>
+      <article class="module">
+        <div class="module-head"><h3>Wing</h3><span class="ref">A1 · HANDHELD</span></div>
+        <figure><img src="assets/Zaman_Wing.webp" alt="Zaman Wing handheld module" data-zoom="" onerror="this.closest('figure').innerHTML='<div style=&quot;height:190px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;color:var(--trace);text-transform:uppercase;background:repeating-linear-gradient(45deg,var(--mask-2) 0 12px,var(--mask) 12px 24px)&quot;>Render in progress</div>'"></figure>
+        <div class="module-body">
+          <p>The handheld body: 6″ 120 Hz OLED, a 6000 mAh battery, hall-effect controls,
+          and adult-sized grips for long, comfortable sessions.</p>
+        </div>
+      </article>
+      <article class="module">
+        <div class="module-head"><h3>Nest</h3><span class="ref">A2 · DOCK</span></div>
+        <figure><img src="assets/Zaman_Nest.webp" alt="Zaman Core seated on the Nest dock" data-zoom=""></figure>
+        <div class="module-body">
+          <p>The desktop body: a docking station with full I/O and advanced cooling that
+          unlocks the processor's full performance for big-screen play.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="core-views">
+      <figure>
+        <img src="assets/Zaman_Core_Top.webp" alt="Core module, top view" data-zoom="">
+        <figcaption>FIG. 2A — CORE, TOP</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/Zaman_Core_Bottom.webp" alt="Core module, bottom view" data-zoom="">
+        <figcaption>FIG. 2B — CORE, bottom</figcaption>
+      </figure>
+    </div>
+  </div>
+</section><section id="specs">
+  <div class="inner">
+    <div class="sec-head">
+      <span class="eyebrow">ZAMAN-001 · SEC 03</span>
+      <h2>Preliminary specifications</h2>
+      <p style="max-width:620px">Targets for the first production revision. Subject to change as prototyping continues.</p>
+    </div>
+
+    <div class="spec-block">
+      <div class="block-head"><h3>Zaman Core</h3><span class="ref">U1 · COMPUTE MODULE</span></div>
+      <table class="ds">
+        <tbody><tr><th scope="row">Processor</th><td>Qualcomm Dragonwing QCS6490 — 8-core 64-bit ARM CPU, up to 2.7 GHz</td></tr>
+        <tr><th scope="row">Graphics</th><td>Qualcomm® Adreno™ 643 @ Up to 812 MHz built-in 3D GPU</td></tr>
+        <tr><th scope="row">Memory</th><td>8–16 GB LPDDR5</td></tr>
+        <tr><th scope="row">Storage</th><td>128 GB – 256 GB High-Speed UFS</td></tr>
+        <tr><th scope="row">Cooling</th><td>Solid-state active cooling<span class="note">Whisper-quiet, sub-20 dBA</span></td></tr>
+        <tr><th scope="row">Wireless</th><td>Wi-Fi 6E + Bluetooth</td></tr>
+        <tr><th scope="row">Interconnect</th><td>Durable high-speed edge connector, PCIe Gen 4 speed</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="spec-block">
+      <div class="block-head"><h3>Zaman Wing</h3><span class="ref">A1 · HANDHELD MODULE</span></div>
+      <table class="ds">
+        <tbody><tr><th scope="row">Display</th><td>6″ OLED, 120 Hz</td></tr>
+        <tr><th scope="row">Battery</th><td>6000 mAh</td></tr>
+        <tr><th scope="row">Controls</th><td>Hall-effect thumbsticks (zero stick drift), quiet face buttons, HD haptics</td></tr>
+        <tr><th scope="row">Ergonomics</th><td>Adult-sized grips for hours of cramp-free play</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="spec-block">
+      <div class="block-head"><h3>Zaman Nest</h3><span class="ref">A2 · DOCK MODULE</span></div>
+      <table class="ds">
+        <tbody><tr><th scope="row">Cooling</th><td>Additional cooling unlocks the processor's full TDP</td></tr>
+        <tr><th scope="row">I/O</th><td>
+          <ul>
+            <li>1× USB-C (full-featured)</li>
+            <li>2× USB 3.0 Type-A · 2× USB 2.0 Type-A</li>
+            <li>1× HDMI · 1× DisplayPort</li>
+            <li>1× 1 Gbit Ethernet</li>
+            <li>1× 3.5 mm audio</li>
+            <li>1× extra M.2 SSD slot</li>
+          </ul>
+        </td></tr>
+      </tbody></table>
+    </div>
+    <p class="footnote">All figures are engineering targets for the first revision and may change before release.</p>
+  </div>
+</section><section id="pricing">
+  <div class="inner">
+    <div class="sec-head">
+      <span class="eyebrow">ZAMAN-001 · SEC 04</span>
+      <h2>Target pricing</h2>
+      <p style="max-width:620px">These are targets, not final prices. Tell us if they're right.</p>
+    </div>
+
+    <span class="price-note">Subject to change · help us set them →</span>
+
+    <div class="price-grid">
+      <!-- Core + Wing -->
+      <div class="price-card">
+
+        <span class="tier">U1 + A1 · Core + Wing</span>
+        <span class="name">Gaming on the fly</span>
+        <div class="amount"><span class="approx">≤</span><span class="cur">$</span>270</div>
+        <p class="desc">The complete handheld — Core along with the Wing.</p>
+      </div>
+
+      <!-- Core + Wing + Nest (flagship, centered) -->
+      <div class="price-card feature">
+        <span class="tag">Full system</span>
+
+        <span class="tier">U1 + A1 + A2 · Core + Wing + Nest</span>
+        <span class="name">Play on your terms</span>
+        <div class="amount"><span class="approx">~</span><span class="cur">$</span>349</div>
+        <p class="desc">Full bundle — Core, Wing and Nest together. Handheld on the move, big-screen at the desk</p>
+      </div>
+
+      <!-- Core + Nest -->
+      <div class="price-card">
+
+        <span class="tier">U1 + A2 · Core + Nest</span>
+        <span class="name">Big screen gaming</span>
+        <div class="amount"><span class="approx">~</span><span class="cur">$</span>219</div>
+        <p class="desc">The desktop/TV console configuration. Core along with the Nest</p>
+      </div>
+    </div>
+
+    <div style="margin-top:2.2rem">
+      <a class="btn" href="https://forms.gle/H6SiFKKwsqFf7kAG9" target="_blank" rel="noopener">Tell us what you'd pay</a>
+      <a class="btn ghost" href="#system">Why three modules?</a>
+    </div>
+  </div>
+</section></main><footer><div class="inner footer-grid"><div><a href="index.html" class="footer-brand">ZAMAN <span>زمن</span></a><p>Play. Explore. Belong.</p><p class="small">A modular gaming project by Kawn Electro.<br>Built in Saudi Arabia. Shared with the world.</p></div><div><a href="os.html">Zaman OS</a><a href="demo.html">Interactive demo</a><a href="downloads.html">Downloads & hardware</a><a href="development.html">Development roadmap</a></div><div><a href="contribute.html">Contribute</a><a href="lab.html">The lab & contact</a><a href="https://github.com/citrineio/Zaman">Website source ↗</a><a href="https://www.instagram.com/zaman.console">Instagram ↗</a></div></div><div class="inner footer-bottom"><span>© 2026 Kawn Electro · Zaman</span><span>Prototype software. Hardware specifications are targets. Product renders are concepts.</span></div></footer><dialog id="lightbox" aria-label="Image preview"><button class="close-lightbox" aria-label="Close image preview">×</button><img id="lightboxImg" alt=""></dialog></body></html>

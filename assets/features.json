@@ -1,0 +1,196 @@
+[
+  {
+    "group": "Library",
+    "title": "A library built for the controller",
+    "status": "working",
+    "detail": "Featured and recent games, collections, favorites, title search, game details and library preferences in the Zaman Pegasus theme.",
+    "demo": "library",
+    "source": "https://github.com/citrineio/zaman-pegasus"
+  },
+  {
+    "group": "Playing",
+    "title": "Launch, return, repeat",
+    "status": "working",
+    "detail": "Managed emulator and native-game sessions, a resident system menu, Resume and confirmed Exit Game. Save and pause behavior remains emulator-specific.",
+    "demo": "game",
+    "source": "https://github.com/citrineio/zaman-sessiond"
+  },
+  {
+    "group": "Playing",
+    "title": "Your Steam games in the library",
+    "status": "working",
+    "detail": "Installed Steam games are exported to Pegasus, with managed launch and return paths that keep the Steam client running. Acceptance covers the tested Q6A configuration, not every Steam title.",
+    "source": "https://github.com/citrineio/zaman-sessiond/blob/main/docs/sprint6-steam-integration.md"
+  },
+  {
+    "group": "Games & stores",
+    "title": "Dukkan: discover native games",
+    "status": "working",
+    "detail": "Curated ARM64 Linux games, artwork, game galleries, controller browsing, Discover and Activity pages. Game-specific controller readiness is validated individually.",
+    "demo": "store",
+    "source": "https://github.com/citrineio/dukkan"
+  },
+  {
+    "group": "Games & stores",
+    "title": "Install while you browse",
+    "status": "working",
+    "detail": "Persistent installation and removal jobs continue after closing Dukkan. Activity, completion notifications and library publication keep the result visible.",
+    "demo": "store",
+    "source": "https://github.com/citrineio/zaman-menu/blob/main/docs/sprint5-transactions.md"
+  },
+  {
+    "group": "Transfer & artwork",
+    "title": "Send games from your phone or PC",
+    "status": "working",
+    "detail": "Background reception from a stock LocalSend client, a durable inbox, receiving progress and controller-operated destination selection. A transfer above 4 GiB was confirmed on the prototype.",
+    "demo": "transfer",
+    "source": "https://github.com/citrineio/zaman-sessiond/blob/main/docs/sprint7-closeout.md"
+  },
+  {
+    "group": "Transfer & artwork",
+    "title": "Artwork & Game Info",
+    "status": "working",
+    "detail": "Recommended automatic lookup after classification, manual collection lookup, progress, results and on-screen answers to interactive questions. Lookup uses the existing Skyscraper setup; missing artwork does not block import.",
+    "demo": "artwork",
+    "source": "https://github.com/citrineio/zaman-menu/blob/main/docs/sprint7-closeout.md"
+  },
+  {
+    "group": "Transfer & artwork",
+    "title": "Refresh the library after import",
+    "status": "working",
+    "detail": "ROM refresh signals are separate from Steam and Native Games refresh. Close the menu to let the library update without interrupting gameplay.",
+    "demo": "transfer",
+    "source": "https://github.com/citrineio/zaman-pegasus/blob/main/docs/sprint7-closeout.md"
+  },
+  {
+    "group": "System",
+    "title": "Audio at your fingertips",
+    "status": "working",
+    "detail": "Volume, mute and output selection. Connecting headphones and seeing an audio-route toast was confirmed on the development device.",
+    "demo": "audio",
+    "source": "https://github.com/citrineio/zaman-menu"
+  },
+  {
+    "group": "System",
+    "title": "Network, Bluetooth and display controls",
+    "status": "working",
+    "detail": "Wi-Fi connection flows and controller-operated text entry, Bluetooth device management, controller status, and display-mode preview with confirmation/revert.",
+    "demo": "settings",
+    "source": "https://github.com/citrineio/zaman-menu"
+  },
+  {
+    "group": "System",
+    "title": "Useful notifications",
+    "status": "working",
+    "detail": "Toasts, notification history, Do Not Disturb, dismissal and links back to relevant activity. Clearing history leaves pending work intact.",
+    "demo": "notifications",
+    "source": "https://github.com/citrineio/zaman-menu/blob/main/docs/sprint4-notifications.md"
+  },
+  {
+    "group": "Controllers",
+    "title": "Controller ownership and reconnect",
+    "status": "working",
+    "detail": "Normalized input, menu/game handoff, reconnect handling and Guide ownership. Steam uses its own Guide path with Start + Select as Zaman’s escape shortcut. Validation is specific to device and transport combinations.",
+    "demo": "controllers",
+    "source": "https://github.com/citrineio/zaman-sessiond"
+  },
+  {
+    "group": "System",
+    "title": "Confirmed power actions",
+    "status": "working",
+    "detail": "Reboot and shutdown with confirmation and graceful session cleanup on tested paths. Sleep is a separate unfinished capability.",
+    "demo": "power",
+    "source": "https://github.com/citrineio/zaman-menu"
+  },
+  {
+    "group": "Reliability",
+    "title": "Stress testing and recovery",
+    "status": "validation",
+    "detail": "Repeat menu transitions, controller reconnect, multi-controller input, long sessions, interrupted transfers, duplicates, low storage and restart recovery. The accepted Sprint 7 baseline is entering rigorous testing.",
+    "source": "https://github.com/citrineio/zaman-sessiond/blob/main/docs/sprint7-closeout.md"
+  },
+  {
+    "group": "Playing",
+    "title": "Per-game emulator qualification",
+    "status": "validation",
+    "detail": "Record tested games, emulator builds, settings, pause and save behavior. Installed cores do not establish support for every game or full system compatibility.",
+    "source": "https://github.com/citrineio/zaman-sessiond/tree/main/registry"
+  },
+  {
+    "group": "Hardware",
+    "title": "Raspberry Pi 5 image",
+    "status": "planned",
+    "detail": "A planned Kawn-maintained preview image. Graphics, audio, controllers, emulators and recovery must be qualified on the Pi. No public Zaman image is available yet.",
+    "help": "Porting & hardware"
+  },
+  {
+    "group": "Updates",
+    "title": "Packaged Zaman component updates",
+    "status": "planned",
+    "detail": "Versioned compatible packages, authenticated releases, visible update progress and tested repair/recovery. First scope targets Zaman components; whole-system atomic updates are separate.",
+    "help": "Updates & recovery"
+  },
+  {
+    "group": "Capture & files",
+    "title": "Screenshots and a gallery",
+    "status": "planned",
+    "detail": "Capture still images, browse them with a controller and export them. Follows the current hardening work.",
+    "help": "Features"
+  },
+  {
+    "group": "Capture & files",
+    "title": "Controller file browser and USB import",
+    "status": "planned",
+    "detail": "Begin with read-only browsing and import. General file operations follow validation of navigation and recovery behavior.",
+    "help": "Features"
+  },
+  {
+    "group": "Playing",
+    "title": "Open the emulator’s own menu",
+    "status": "planned",
+    "detail": "Controller access to native emulator settings and save management. Behavior will depend on each supported emulator.",
+    "help": "Features"
+  },
+  {
+    "group": "Streaming",
+    "title": "Play from your PC",
+    "status": "planned",
+    "detail": "Evaluate a managed PC-streaming client after hardening. Hardware video decoding, latency and local/remote controller ownership must be measured on each board.",
+    "help": "Porting & hardware"
+  },
+  {
+    "group": "Capture & files",
+    "title": "General file operations",
+    "status": "planned",
+    "detail": "Add controller-operated copy, move, rename and deletion after read-only browsing and import are validated. Clear confirmation and recoverable behavior are part of the proposed scope.",
+    "help": "Features"
+  },
+  {
+    "group": "Capture & files",
+    "title": "Gameplay recording",
+    "status": "planned",
+    "detail": "Evaluate recording after screenshots, with measured encoding support and impact on gameplay. No recording performance is promised yet.",
+    "help": "Features"
+  },
+  {
+    "group": "Updates",
+    "title": "Whole-system A/B updates",
+    "status": "exploring",
+    "detail": "Evaluate signed image updates, separate persistent data, bounded boot attempts and tested fallback. Depends on a controlled image layout and board-specific boot integration.",
+    "help": "Updates & recovery"
+  },
+  {
+    "group": "Hardware",
+    "title": "Community hardware ports",
+    "status": "exploring",
+    "detail": "Document installation, graphics, audio, input and recovery independently for each port. A running interface is the first milestone toward a complete console experience.",
+    "help": "Porting & hardware"
+  },
+  {
+    "group": "System",
+    "title": "Sleep and appearance controls",
+    "status": "exploring",
+    "detail": "These are placeholders in the current menu. Device suspend/resume and expanded appearance settings need their own implementation and validation.",
+    "help": "Features"
+  }
+]
