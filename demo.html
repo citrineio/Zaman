@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#080c13" />
+    <meta
+      name="description"
+      content="Try Zaman OS in an interactive browser simulation: browse games, play a platformer, open the menu and explore sample transfer and artwork workflows."
+    />
+    <title>Experience Zaman OS | Interactive preview</title>
+    <link rel="icon" href="assets/bird.webp" />
+    <link rel="stylesheet" href="assets/demo.css" />
+    <link rel="stylesheet" href="assets/dukkan-demo.css" />
+    <script defer src="assets/dukkan-demo.js"></script>
+    <script defer src="assets/demo.js"></script>
+  </head>
+  <body>
+    <header class="demo-banner">
+      <a href="os.html">← About Zaman OS</a>
+      <span>
+        <i></i>
+        INTERACTIVE BROWSER PREVIEW
+      </span>
+      <button id="help-button" data-action="help">Controls & tour</button>
+    </header>
+    <div class="demo-notice">
+      Sample games and simulated system actions. This preview runs in your browser.
+    </div>
+    <main id="console" aria-label="Zaman OS interactive preview">
+      <div id="library-shell">
+        <header class="console-header">
+          <a href="os.html" class="console-brand" aria-label="About Zaman OS">
+            <img src="assets/bird.webp" alt="" />
+            <img src="assets/wordmark.webp" alt="Zaman" />
+            <small>OS</small>
+          </a>
+          <nav aria-label="Library pages" id="library-nav"></nav>
+          <time id="clock"></time>
+        </header>
+        <div id="library-content"></div>
+        <footer class="console-footer">
+          <span>
+            <kbd>↑↓←→</kbd>
+            Browse
+            <kbd>Enter</kbd>
+            Select
+            <kbd>Q / E</kbd>
+            Tabs
+          </span>
+          <span>
+            <kbd>M</kbd>
+            System menu
+            <kbd>Esc</kbd>
+            Back
+          </span>
+        </footer>
+      </div>
+      <section id="dukkan-shell" aria-label="Dukkan storefront preview" hidden></section>
+      <div id="game-shell" hidden>
+        <div class="game-bar">
+          <span>
+            DUNE RUNNER
+            <small>Original browser mini-game · simulated OS session</small>
+          </span>
+          <span id="game-status" aria-live="polite">Collect the lights. Reach the flag.</span>
+        </div>
+        <canvas
+          id="game"
+          width="1280"
+          height="720"
+          aria-label="Dune Runner platform game. Move with Left and Right. Jump with Space. Open the menu with M."
+        ></canvas>
+        <div class="touch-controls">
+          <button data-control="left" aria-label="Move left">←</button>
+          <button data-control="right" aria-label="Move right">→</button>
+          <button data-control="jump" aria-label="Jump">Jump ↑</button>
+        </div>
+        <p class="game-hint">← → move · Space jump · M menu · Reach the flag to finish</p>
+      </div>
+      <button
+        id="system-button"
+        data-action="toggle-menu"
+        aria-keyshortcuts="M"
+        aria-expanded="false"
+        aria-controls="system-menu"
+      >
+        <span>☰</span>
+        Zaman menu
+        <kbd>M</kbd>
+      </button>
+      <div id="menu-backdrop" hidden></div>
+      <aside id="system-menu" hidden role="dialog" aria-modal="true" aria-labelledby="menu-title">
+        <header>
+          <div class="menu-brand">
+            <img src="assets/bird.webp" alt="" />
+            <div>
+              <h2 id="menu-title">Zaman</h2>
+              <span id="menu-context">System menu</span>
+            </div>
+          </div>
+          <button data-action="close-menu" class="icon-button" aria-label="Close system menu">
+            ×
+          </button>
+        </header>
+        <nav id="menu-tabs" aria-label="System menu tabs"></nav>
+        <div id="menu-content"></div>
+        <footer>
+          <span>
+            <kbd>Esc</kbd>
+            Back
+          </span>
+          <span>
+            <kbd>Q / E</kbd>
+            Tabs
+          </span>
+          <span>
+            <kbd>M</kbd>
+            Close
+          </span>
+        </footer>
+      </aside>
+      <div id="toast" role="status" aria-live="polite" hidden></div>
+      <dialog id="modal" aria-labelledby="modal-title"></dialog>
+    </main>
+    <footer class="demo-bottom">
+      <span>Based on the Pegasus, system menu and Dukkan QML.</span>
+      <a href="development.html">Feature status</a>
+      <a href="contribute.html">Help build Zaman ↗</a>
+      <button data-action="reset">Reset preview</button>
+    </footer>
+  </body>
+</html>
