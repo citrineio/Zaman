@@ -708,6 +708,18 @@ window.createDukkanPreview = function createDukkanPreview(options) {
   }
   function handle(action, data = {}) {
     if (!state.open || root.inert) return;
+    // Activate the visible focused control, including gallery buttons reached
+    // with Tab; never let Enter trigger an installation behind another surface.
+    if (action === "select" && !state.modal && !state.keyboard) {
+      const control = document.activeElement?.closest("[data-dk]");
+      if (control && root.contains(control)) {
+        if (control.dataset.dk === "job") state.job = control.dataset.job;
+        else {
+          action = control.dataset.dk;
+          data = control.dataset;
+        }
+      }
+    }
     if (action === "noop") return;
     if (action === "keyView") {
       state.keyboardView = (state.keyboardView + 1) % 3;
@@ -737,8 +749,8 @@ window.createDukkanPreview = function createDukkanPreview(options) {
       return;
     }
     if (state.modal) {
-      if (["left", "up", "confirmNo"].includes(action)) state.choice = 0;
-      else if (["right", "down", "confirmYes"].includes(action)) state.choice = 1;
+      if (["left", "confirmNo"].includes(action)) state.choice = 0;
+      else if (["right", "confirmYes"].includes(action)) state.choice = 1;
       if (action === "back" || action === "confirmNo") state.modal = null;
       else if (action === "select" || action === "confirmYes") {
         const modal = state.modal;
@@ -790,8 +802,8 @@ window.createDukkanPreview = function createDukkanPreview(options) {
     }
     if (state.gallery) {
       if (action === "back") state.gallery = false;
-      else if (["previousImage", "nextImage"].includes(action))
-        moveImage(action === "nextImage" ? 1 : -1);
+      else if (["left", "right", "previousImage", "nextImage"].includes(action))
+        moveImage(["right", "nextImage"].includes(action) ? 1 : -1);
       render();
       return;
     }
@@ -819,6 +831,25 @@ window.createDukkanPreview = function createDukkanPreview(options) {
       if (selectedGame()?.screenshots.length) state.gallery = true;
     } else if (action === "library") section(state.section === "Library" ? "Discover" : "Library");
     else if (state.details) {
+      const focused = document.activeElement;
+      if (["left", "right"].includes(action) && focused?.closest(".dk-thumbnails")) {
+        state.image = Number(focused.dataset.image);
+        moveImage(action === "right" ? 1 : -1);
+        render(false);
+        root
+          .querySelector(`.dk-thumbnails [data-image="${state.image}"]`)
+          ?.focus({ preventScroll: true });
+        return;
+      }
+      if (["left", "right"].includes(action) && focused?.closest(".dk-gallery-controls")) {
+        const controls = [...root.querySelectorAll(".dk-gallery-controls button")];
+        const next = Math.max(
+          0,
+          Math.min(controls.length - 1, controls.indexOf(focused) + (action === "right" ? 1 : -1)),
+        );
+        controls[next]?.focus({ preventScroll: true });
+        return;
+      }
       if (action === "back") {
         state.details = false;
         state.area = "catalog";
@@ -842,14 +873,27 @@ window.createDukkanPreview = function createDukkanPreview(options) {
       openDetails();
     } else if (action === "details") openDetails();
     else if (state.area === "nav") {
-      if (action === "up") state.nav = Math.max(0, state.nav - 1);
-      else if (action === "down") state.nav = Math.min(2, state.nav + 1);
-      else if (["right", "back"].includes(action)) state.area = "catalog";
+      // Read the rendered rail's axis: phones display a horizontal tab row,
+      // whereas the desktop QML-style rail is vertical. Cross-axis input
+      // leaves the rail instead of selecting a visually adjacent tab.
+      const rail = root.querySelector(".dk-rail");
+      const horizontal = getComputedStyle(rail).flexDirection.startsWith("row");
+      const previous = horizontal ? "left" : "up";
+      const next = horizontal ? "right" : "down";
+      const leave = horizontal ? "down" : "right";
+      if (action === previous) state.nav = Math.max(0, state.nav - 1);
+      else if (action === next) state.nav = Math.min(2, state.nav + 1);
+      else if ([leave, "back"].includes(action)) state.area = "catalog";
       else if (action === "select") section(["Discover", "Library", "Activity"][state.nav]);
     } else if (state.area === "hero") {
       if (action === "select") openDetails();
       else if (["down", "back"].includes(action)) state.area = "catalog";
       else if (action === "left") state.area = "nav";
+      else if (
+        action === "up" &&
+        getComputedStyle(root.querySelector(".dk-rail")).flexDirection.startsWith("row")
+      )
+        state.area = "nav";
     } else {
       if (action === "left" && state.index === 0) state.area = "nav";
       else if (["left", "right"].includes(action))

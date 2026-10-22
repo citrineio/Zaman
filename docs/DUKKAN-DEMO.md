@@ -48,3 +48,23 @@ shortcuts. Physical gamepad and cross-browser qualification remain outstanding.
 Implementation: `assets/dukkan-demo.js`, `assets/dukkan-demo.css` and the
 integration points in `assets/demo.js`. Editable fixture descriptions are near
 the top of `dukkan-demo.js`; source files retain readable HTML template formatting.
+
+
+## Directional navigation audit
+
+| Visible arrangement | Direction |
+| --- | --- |
+| Desktop Discover/Library/Activity rail | Up/Down; Right enters the catalog |
+| Phone Discover/Library/Activity row | Left/Right; Down enters the catalog |
+| Horizontal game shelf | Left/Right; Up reaches the hero |
+| Play/Uninstall and confirmation button rows | Left/Right; Up/Down does not switch the confirmation choice |
+| Screenshot thumbnails and Previous/Next control row | Left/Right within that row |
+| Fullscreen images | Left/Right or shoulders/Page Up/Page Down |
+| Vertical Activity transactions | Up/Down |
+| On-screen search keyboard | Left/Right for columns; Up/Down for rows |
+| Details description | Up/Down scrolls the description |
+
+The browser reads the rendered rail's flex direction, so the input axis follows
+its responsive layout. Native QML confirmations permit both axes; the browser
+now deliberately follows the horizontal button row. Enter activates the visible
+focused gallery control, rather than falling through to an install action.

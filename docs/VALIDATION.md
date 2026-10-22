@@ -100,6 +100,23 @@ external to the website.
 - Gamepad action routing is implemented from source; physical controller testing
   has not been performed. Browser jobs are simulations, not package-manager tests.
 
+## Directional navigation follow-up — 22 October 2026
+
+- Found and fixed a phone-layout mismatch: the horizontal navigation row retained
+  the desktop vertical mapping. Desktop Up/Down and phone Left/Right now both
+  follow their visible axis. Phone Up leaves the focused Library tab selected;
+  Down moves into the catalog.
+- Confirmed the horizontal shelf uses Left/Right, Play/Uninstall uses Left/Right,
+  and Down does not switch the focused action. Confirmation Down preserves the
+  safe choice; Right moves to confirmation.
+- Fullscreen gallery Left/Right changes images; Down does not change images.
+  Search-keyboard Down then Right moves from q to s.
+- Fixed thumbnail movement to start from the actually focused thumbnail. From
+  thumbnail 2, Right focuses/selects thumbnail 3. Previous/Next buttons navigate
+  horizontally, and Enter advances the image without opening an install prompt.
+- These checks used real browser keyboard input. Physical gamepad testing is
+  still outstanding; it shares the same directional action handler.
+
 ## Remaining validation
 
 - Physical gamepad testing: mappings, analog deadzones, shoulder navigation and
