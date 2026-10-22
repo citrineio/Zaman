@@ -43,7 +43,7 @@
             Open progress.
           </h1>
           <p class="hero-sub">
-            The Sprint 7 prototype baseline is accepted. The current priority is rigorous testing and
+            The current priority is rigorous testing and
             fixing reproduced bugs. Future features follow that hardening work.
           </p>
           <div>
@@ -56,7 +56,7 @@
         <div class="inner">
           <p>
             <strong>Working</strong>
-            means accepted on specific prototype paths.
+            means accepted on our prototype.
             <strong>Under validation</strong>
             needs broader testing.
             <strong>Planned</strong>
@@ -65,7 +65,7 @@
             has unresolved feasibility or scope. These are development states, not release dates.
           </p>
           <p class="small">
-            Sources: current public component repositories and the accepted Sprint 7 closeout, 19 October
+            Sources: current public component repositories, 19 October
             2026. The browser demo is illustrative and does not establish platform compatibility.
           </p>
           <div class="filters" role="group" aria-label="Filter roadmap">
@@ -95,7 +95,7 @@
                 <span class="status working">Working on prototype</span>
               </div>
               <h3>Launch, return, repeat</h3>
-              <p>Managed emulator and native-game sessions, a system menu, Resume and confirmed Exit Game. Save and pause behavior remains emulator-specific.</p>
+              <p>Managed emulator and native-game sessions so a frozen game does not kill your experience. A system menu, Resume and confirmed Exit Game. Emulators are configured with auto save and auto resume by default.</p>
               <div class="card-links">
                 <a class="btn ghost" href="demo.html?scene=game" target="_blank" rel="noopener noreferrer" title="Opens the interactive preview in a new tab">Try this →</a>
                 <a class="text-link" href="https://github.com/citrineio/zaman-sessiond">Source &amp; implementation ↗</a>
@@ -107,7 +107,7 @@
                 <span class="status working">Working on prototype</span>
               </div>
               <h3>Your Steam games in the library</h3>
-              <p>Installed Steam games are exported to Pegasus, with managed launch and return paths that keep the Steam client running. Acceptance covers the tested Q6A configuration, not every Steam title.</p>
+              <p>Installed Steam games are exported to library, with managed launch and return paths that keep the Steam client running. Whether the game runs depends on its requirements and optimization, unfortunately</p>
               <div class="card-links">
                 <a class="text-link" href="https://github.com/citrineio/zaman-sessiond/blob/main/docs/sprint6-steam-integration.md">Source &amp; implementation ↗</a>
               </div>
@@ -118,7 +118,7 @@
                 <span class="status working">Working on prototype</span>
               </div>
               <h3>Dukkan: discover native games</h3>
-              <p>Curated ARM64 Linux games, artwork, game galleries, controller browsing, Discover and Activity pages. Game-specific controller readiness is validated individually.</p>
+              <p>Curated ARM64 Linux games, artwork, game galleries, controller browsing, Discover and Activity pages. Game-specific controller readiness is on a per-game basis.</p>
               <div class="card-links">
                 <a class="btn ghost" href="demo.html?scene=store" target="_blank" rel="noopener noreferrer" title="Opens the interactive preview in a new tab">Try this →</a>
                 <a class="text-link" href="https://github.com/citrineio/dukkan">Source &amp; implementation ↗</a>
@@ -130,7 +130,7 @@
                 <span class="status working">Working on prototype</span>
               </div>
               <h3>Install while you browse</h3>
-              <p>Persistent installation and removal jobs continue after closing Dukkan. Activity, completion notifications and library publication keep the result visible.</p>
+              <p>Background installation and removal jobs continue after closing Dukkan. Activity, completion notifications and library automatic update.</p>
               <div class="card-links">
                 <a class="btn ghost" href="demo.html?scene=store" target="_blank" rel="noopener noreferrer" title="Opens the interactive preview in a new tab">Try this →</a>
                 <a class="text-link" href="https://github.com/citrineio/zaman-menu/blob/main/docs/sprint5-transactions.md">Source &amp; implementation ↗</a>
@@ -154,7 +154,7 @@
                 <span class="status working">Working on prototype</span>
               </div>
               <h3>Artwork &amp; Game Info</h3>
-              <p>Recommended automatic lookup after classification, manual collection lookup, progress, results and on-screen answers to interactive questions. Lookup uses the existing Skyscraper setup; missing artwork does not block import.</p>
+              <p>Tool for automatic scraping of artwork, screenshots and description for your retro game ROMs complete with an automatic library update. You can select the recommended option or have full control with the manual option.</p>
               <div class="card-links">
                 <a class="btn ghost" href="demo.html?scene=artwork" target="_blank" rel="noopener noreferrer" title="Opens the interactive preview in a new tab">Try this →</a>
                 <a class="text-link" href="https://github.com/citrineio/zaman-menu/blob/main/docs/sprint7-closeout.md">Source &amp; implementation ↗</a>
@@ -166,7 +166,7 @@
                 <span class="status working">Working on prototype</span>
               </div>
               <h3>Refresh the library after import</h3>
-              <p>ROM refresh signals are separate from Steam and Native Games refresh. Close the menu to let the library update without interrupting gameplay.</p>
+              <p>Automatic library update after Dukkan, Steam and ROM transfers. Close the menu to let the library update without interrupting gameplay.</p>
               <div class="card-links">
                 <a class="btn ghost" href="demo.html?scene=transfer" target="_blank" rel="noopener noreferrer" title="Opens the interactive preview in a new tab">Try this →</a>
                 <a class="text-link" href="https://github.com/citrineio/zaman-pegasus/blob/main/docs/sprint7-closeout.md">Source &amp; implementation ↗</a>
@@ -201,7 +201,7 @@
                 <span>System</span>
                 <span class="status working">Working on prototype</span>
               </div>
-              <h3>Useful notifications</h3>
+              <h3>Unintrusive notifications</h3>
               <p>Toasts, notification history, Do Not Disturb, dismissal and links back to relevant activity. Clearing history leaves pending work intact.</p>
               <div class="card-links">
                 <a class="btn ghost" href="demo.html?scene=notifications" target="_blank" rel="noopener noreferrer" title="Opens the interactive preview in a new tab">Try this →</a>
@@ -214,7 +214,7 @@
                 <span class="status working">Working on prototype</span>
               </div>
               <h3>Controller ownership and reconnect</h3>
-              <p>Normalized input, menu/game handoff, reconnect handling and Guide ownership. Steam uses its own Guide path with Start + Select as Zaman’s escape shortcut. Validation is specific to device and transport combinations.</p>
+              <p>Normalized input, menu/game handoff, reconnect handling and Guide ownership. Steam uses its own Guide path with Start + Select as Zaman’s escape shortcut.</p>
               <div class="card-links">
                 <a class="btn ghost" href="demo.html?scene=controllers" target="_blank" rel="noopener noreferrer" title="Opens the interactive preview in a new tab">Try this →</a>
                 <a class="text-link" href="https://github.com/citrineio/zaman-sessiond">Source &amp; implementation ↗</a>
@@ -238,7 +238,7 @@
                 <span class="status validation">Under validation</span>
               </div>
               <h3>Stress testing and recovery</h3>
-              <p>Repeat menu transitions, controller reconnect, multi-controller input, long sessions, interrupted transfers, duplicates, low storage and restart recovery. The accepted Sprint 7 baseline is entering rigorous testing.</p>
+              <p>The current baseline is entering rigorous validation, covering menu responsiveness, controller reconnection and multi-controller support, extended play sessions, transfer resilience, duplicate handling, storage capacity checks and recovery after restart..</p>
               <div class="card-links">
                 <a class="text-link" href="https://github.com/citrineio/zaman-sessiond/blob/main/docs/sprint7-closeout.md">Source &amp; implementation ↗</a>
               </div>
@@ -249,7 +249,7 @@
                 <span class="status validation">Under validation</span>
               </div>
               <h3>Per-game emulator qualification</h3>
-              <p>Record tested games, emulator builds, settings, pause and save behavior. Installed cores do not establish support for every game or full system compatibility.</p>
+              <p>Record tested games, emulator builds, settings, pause and save behavior. Installed cores do not establish support for every game or full system compatibility. Development device successfully ran PS2 games at 2x resolution smoothly.</p>
               <div class="card-links">
                 <a class="text-link" href="https://github.com/citrineio/zaman-sessiond/tree/main/registry">Source &amp; implementation ↗</a>
               </div>

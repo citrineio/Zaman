@@ -11,7 +11,7 @@
     "group": "Playing",
     "title": "Launch, return, repeat",
     "status": "working",
-    "detail": "Managed emulator and native-game sessions, a system menu, Resume and confirmed Exit Game. Save and pause behavior remains emulator-specific.",
+    "detail": "Managed emulator and native-game sessions so a frozen game does not kill your experience. A system menu, Resume and confirmed Exit Game. Emulators are configured with auto save and auto resume by default.",
     "demo": "game",
     "source": "https://github.com/citrineio/zaman-sessiond"
   },
@@ -19,14 +19,14 @@
     "group": "Playing",
     "title": "Your Steam games in the library",
     "status": "working",
-    "detail": "Installed Steam games are exported to Pegasus, with managed launch and return paths that keep the Steam client running. Acceptance covers the tested Q6A configuration, not every Steam title.",
+    "detail": "Installed Steam games are exported to library, with managed launch and return paths that keep the Steam client running. Whether the game runs depends on its requirements and optimization, unfortunately",
     "source": "https://github.com/citrineio/zaman-sessiond/blob/main/docs/sprint6-steam-integration.md"
   },
   {
     "group": "Games & stores",
     "title": "Dukkan: discover native games",
     "status": "working",
-    "detail": "Curated ARM64 Linux games, artwork, game galleries, controller browsing, Discover and Activity pages. Game-specific controller readiness is validated individually.",
+    "detail": "Curated ARM64 Linux games, artwork, game galleries, controller browsing, Discover and Activity pages. Game-specific controller readiness is on a per-game basis.",
     "demo": "store",
     "source": "https://github.com/citrineio/dukkan"
   },
@@ -34,7 +34,7 @@
     "group": "Games & stores",
     "title": "Install while you browse",
     "status": "working",
-    "detail": "Persistent installation and removal jobs continue after closing Dukkan. Activity, completion notifications and library publication keep the result visible.",
+    "detail": "Background installation and removal jobs continue after closing Dukkan. Activity, completion notifications and library automatic update.",
     "demo": "store",
     "source": "https://github.com/citrineio/zaman-menu/blob/main/docs/sprint5-transactions.md"
   },
@@ -50,7 +50,7 @@
     "group": "Transfer & artwork",
     "title": "Artwork & Game Info",
     "status": "working",
-    "detail": "Recommended automatic lookup after classification, manual collection lookup, progress, results and on-screen answers to interactive questions. Lookup uses the existing Skyscraper setup; missing artwork does not block import.",
+    "detail": "Tool for automatic scraping of artwork, screenshots and description for your retro game ROMs complete with an automatic library update. You can select the recommended option or have full control with the manual option.",
     "demo": "artwork",
     "source": "https://github.com/citrineio/zaman-menu/blob/main/docs/sprint7-closeout.md"
   },
@@ -58,7 +58,7 @@
     "group": "Transfer & artwork",
     "title": "Refresh the library after import",
     "status": "working",
-    "detail": "ROM refresh signals are separate from Steam and Native Games refresh. Close the menu to let the library update without interrupting gameplay.",
+    "detail": "Automatic library update after Dukkan, Steam and ROM transfers. Close the menu to let the library update without interrupting gameplay.",
     "demo": "transfer",
     "source": "https://github.com/citrineio/zaman-pegasus/blob/main/docs/sprint7-closeout.md"
   },
@@ -80,7 +80,7 @@
   },
   {
     "group": "System",
-    "title": "Useful notifications",
+    "title": "Unintrusive notifications",
     "status": "working",
     "detail": "Toasts, notification history, Do Not Disturb, dismissal and links back to relevant activity. Clearing history leaves pending work intact.",
     "demo": "notifications",
@@ -90,7 +90,7 @@
     "group": "Controllers",
     "title": "Controller ownership and reconnect",
     "status": "working",
-    "detail": "Normalized input, menu/game handoff, reconnect handling and Guide ownership. Steam uses its own Guide path with Start + Select as Zaman’s escape shortcut. Validation is specific to device and transport combinations.",
+    "detail": "Normalized input, menu/game handoff, reconnect handling and Guide ownership. Steam uses its own Guide path with Start + Select as Zaman’s escape shortcut.",
     "demo": "controllers",
     "source": "https://github.com/citrineio/zaman-sessiond"
   },
@@ -106,7 +106,7 @@
     "group": "Reliability",
     "title": "Stress testing and recovery",
     "status": "validation",
-    "detail": "Repeat menu transitions, controller reconnect, multi-controller input, long sessions, interrupted transfers, duplicates, low storage and restart recovery. The accepted Sprint 7 baseline is entering rigorous testing.",
+    "detail": "The current baseline is entering rigorous validation, covering menu responsiveness, controller reconnection and multi-controller support, extended play sessions, transfer resilience, duplicate handling, storage capacity checks and recovery after restart..",
     "source": "https://github.com/citrineio/zaman-sessiond/blob/main/docs/sprint7-closeout.md",
     "show_in_preview": true
   },
@@ -114,7 +114,7 @@
     "group": "Playing",
     "title": "Per-game emulator qualification",
     "status": "validation",
-    "detail": "Record tested games, emulator builds, settings, pause and save behavior. Installed cores do not establish support for every game or full system compatibility.",
+    "detail": "Record tested games, emulator builds, settings, pause and save behavior. Installed cores do not establish support for every game or full system compatibility. Development device successfully ran PS2 games at 2x resolution smoothly.",
     "source": "https://github.com/citrineio/zaman-sessiond/tree/main/registry"
   },
   {
