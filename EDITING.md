@@ -23,6 +23,8 @@ edit or build the site.
 | Feature roadmap entries | `assets/features.json` |
 | Demo's static controls and help | `demo.html` |
 | Demo game descriptions, menus and notifications | `assets/demo.js` |
+| Dukkan sample catalog, store screens and copy | `assets/dukkan-demo.js` |
+| Dukkan store appearance | `assets/dukkan-demo.css` |
 
 For example, open `content/pages/home.html`, search for `Meet Zaman OS.`, and edit
 only the text between its tags:

@@ -69,8 +69,8 @@ assert all(
     f["status"] in ["working", "validation", "planned", "exploring"] for f in features
 )
 assert all(f.get("source") for f in features if f["status"] == "working")
-for p in ["assets/demo.js", "assets/site.js"]:
-    subprocess.run(["node", "--check", str(ROOT / p)], check=True)
+for p in ROOT.joinpath("assets").glob("*.js"):
+    subprocess.run(["node", "--check", str(p)], check=True)
 if errors:
     raise SystemExit("\n".join(errors))
 print(

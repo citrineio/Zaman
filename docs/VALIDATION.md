@@ -77,6 +77,29 @@ external to the website.
   pages into a clean checkout, dirty checkouts are refused, and bundled push refuses
   to omit local edits. No remote push is performed by these checks.
 
+## Dukkan QML correction — 22 October 2026
+
+- Verified the current Main.qml blob against the local published source; read the
+  full window, detail/gallery, keyboard and transaction QML components, plus the
+  native SDL gamepad action map. See `DUKKAN-DEMO.md` for the correspondence.
+- Replaced the menu install card with a separate storefront. Desktop Discover and
+  game details reviewed visually against the QML hierarchy and palette.
+- Browser checks cover shelf focus/hero changes, pointer selection, safe install
+  confirmation, gallery previous/next/fullscreen and Enter isolation in fullscreen.
+- Installed Ember Trail; Library showed it after reopening the store. Cancelled a
+  Moss Postcard job from Activity, retried it and left Dukkan; the completed game
+  subsequently appeared in Library. Queued Tidal Parcel behind running Signal
+  Lantern; both had independent IDs and stages in Activity.
+- Search keyboard accepts physical text including M without opening the system
+  menu; query `ember` returned one result. Uninstall defaults to Go back and states
+  that application saves are retained. Confirmed removal completed and changed
+  Ember Trail back to a Flathub entry. Tab selected the confirmation action correctly.
+- System menu opens over Dukkan and restores its Library context on close.
+- Phone-sized Discover/details reviewed in a 390 × 844 iframe; available and
+  content widths both measured 375 CSS px, without horizontal page overflow.
+- Gamepad action routing is implemented from source; physical controller testing
+  has not been performed. Browser jobs are simulations, not package-manager tests.
+
 ## Remaining validation
 
 - Physical gamepad testing: mappings, analog deadzones, shoulder navigation and

@@ -8,7 +8,7 @@ assuming that old README backlogs supersede later accepted sprint closeouts.
 | zaman-sessiond | 531413e0f7f4c4e93f83ac93c6da74d581afaf9c | docs/sprint7-closeout.md, tools/transfer/README.md, docs/sprint6-steam-integration.md |
 | zaman-menu | d94ba6fe376f2b6b0bb1053a2257f3dd87dd1948 | docs/sprint7-closeout.md, qml/shell.qml, qml/TransferPage.qml, qml/ScrapePage.qml |
 | zaman-pegasus | 578121f0dc333e6069be0a81873d52b927e6d072 | README.md, components/Brand.qml, components/Shell.qml, theme.qml |
-| dukkan | 98830fdc72d5a90e88646babf0a41c098eb9a0ff | README.md, background transaction implementation |
+| dukkan | 98830fdc72d5a90e88646babf0a41c098eb9a0ff | qml/Main.qml, GameTile, GameArt, GameIdentity, ScreenshotView, TransactionList, TransactionProgress, src/gamepadbridge.cpp |
 
 The owner-confirmed Sprint 7 baseline includes transfer, manual artwork lookup,
 end-to-end GBA import with artwork/details, and the subsequent UI consistency
@@ -37,3 +37,7 @@ installed emulator, a synthetic test or a browser simulation.
 - `assets/media/preview.mp4`: a labelled interface demonstration assembled from
   the browser preview. It is not device footage or an emulation benchmark.
 - Dune Runner: original canvas mini-game implemented for this website.
+
+Dukkan screen/action comparison: `docs/DUKKAN-DEMO.md`. Its Main.qml default-branch
+blob was rechecked on 22 October 2026. `assets/demo/ember-1.svg` through
+`ember-3.svg` are original illustrated gallery fixtures for the browser preview.

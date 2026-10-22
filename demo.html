@@ -11,6 +11,8 @@
     <title>Experience Zaman OS | Interactive preview</title>
     <link rel="icon" href="assets/bird.webp" />
     <link rel="stylesheet" href="assets/demo.css" />
+    <link rel="stylesheet" href="assets/dukkan-demo.css" />
+    <script defer src="assets/dukkan-demo.js"></script>
     <script defer src="assets/demo.js"></script>
   </head>
   <body>
@@ -54,6 +56,7 @@
           </span>
         </footer>
       </div>
+      <section id="dukkan-shell" aria-label="Dukkan storefront preview" hidden></section>
       <div id="game-shell" hidden>
         <div class="game-bar">
           <span>
@@ -121,7 +124,7 @@
       <dialog id="modal" aria-labelledby="modal-title"></dialog>
     </main>
     <footer class="demo-bottom">
-      <span>Inspired by the actual Pegasus theme & system menu.</span>
+      <span>Based on the Pegasus, system menu and Dukkan QML.</span>
       <a href="development.html">Feature status</a>
       <a href="contribute.html">Help build Zaman ↗</a>
       <button data-action="reset">Reset preview</button>

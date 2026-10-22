@@ -86,7 +86,10 @@
         if (typeof x[k] === "boolean") saved[k] = x[k];
       if (Array.isArray(x.favorites))
         saved.favorites = x.favorites.filter((v) => typeof v === "string" && v.length < 30);
-      if (Array.isArray(x.installed)) saved.installed = x.installed.filter((v) => v === "ember");
+      if (Array.isArray(x.installed))
+        saved.installed = x.installed.filter((v) =>
+          ["ember", "sprout", "nova", "tide"].includes(v),
+        );
       if (Number.isFinite(x.volume)) saved.volume = Math.max(0, Math.min(100, x.volume));
       if (["HDMI / TV", "Headphones"].includes(x.output)) saved.output = x.output;
     }
@@ -109,13 +112,42 @@
     receive: 0,
     scrape: "idle",
     lookup: 0,
-    storeProgress: 0,
     installing: false,
     notifications: [],
     tasks: { play: false, transfer: false, artwork: false },
     tour: !sessionStorageSafe("zaman-tour-seen"),
     previewResolution: null,
   };
+  let controllerConnected = false;
+  const dukkan = window.createDukkanPreview({
+    root: $("#dukkan-shell"),
+    installed: state.installed,
+    controller: () => controllerConnected,
+    notify,
+    onOpen() {
+      $("#library-shell").hidden = true;
+      $("#game-shell").hidden = true;
+      keys.clear();
+    },
+    onClose() {
+      $("#library-shell").hidden = state.playing;
+      $("#game-shell").hidden = !state.playing;
+      if (!state.playing) renderLibrary();
+      $("#system-button").focus({ preventScroll: true });
+    },
+    onChange(update) {
+      state.installed = update.installed;
+      state.installing = update.busy;
+      persist();
+      if (state.menu && state.sub === "activity") renderMenu(false);
+      else if (!state.menu && !dukkan.isOpen()) renderLibrary();
+    },
+  });
+  function launchDukkan(activity = false) {
+    if (state.menu) closeMenu();
+    $("#modal").close();
+    dukkan.open(activity);
+  }
   function sessionStorageSafe(k, v) {
     try {
       if (v !== undefined) sessionStorage.setItem(k, v);
@@ -135,6 +167,16 @@
   }
   function games() {
     const a = seed.filter((g) => g.id !== "ember" || state.installed.includes("ember"));
+    for (const game of dukkan.installedGames()) {
+      if (game.id !== "ember")
+        a.push({
+          id: game.id,
+          title: game.name,
+          collection: "Native games",
+          art: game.art,
+          description: game.description,
+        });
+    }
     if (state.imported)
       a.push({
         id: "pocket",
@@ -212,6 +254,7 @@
       $("#system-menu").hidden = false;
       $("#library-shell").inert = true;
       $("#game-shell").inert = true;
+      $("#dukkan-shell").inert = true;
       $("#system-button").setAttribute("aria-expanded", "true");
       keys.clear();
     }
@@ -229,9 +272,14 @@
     $("#menu-backdrop").hidden = true;
     $("#library-shell").inert = false;
     $("#game-shell").inert = false;
+    $("#dukkan-shell").inert = false;
     $("#system-button").setAttribute("aria-expanded", "false");
     keys.clear();
     renderLibrary();
+    if (dukkan.isOpen()) {
+      dukkan.restoreFocus();
+      return;
+    }
     if (openMenu.origin?.isConnected) openMenu.origin.focus({ preventScroll: true });
     else $("#system-button").focus({ preventScroll: true });
   }
@@ -293,9 +341,11 @@
     const focused = document.activeElement;
     const previousKey = focusKey(focused);
     const focusScope = state.tab + "/" + state.sub;
-    $("#menu-context").textContent = state.playing
-      ? "In game · Dune Runner"
-      : "Library · Browser simulation";
+    $("#menu-context").textContent = dukkan.isOpen()
+      ? "Dukkan · Browser simulation"
+      : state.playing
+        ? "In game · Dune Runner"
+        : "Library · Browser simulation";
     $("#menu-tabs").innerHTML = ["Home", "Notifications", "Settings"]
       .map(
         (t) =>
@@ -310,8 +360,12 @@
       body +=
         row(
           "↩",
-          state.playing ? "Resume" : "Return to library",
-          state.playing ? "Return to your game" : "Continue browsing your games",
+          dukkan.isOpen() ? "Return to Dukkan" : state.playing ? "Resume" : "Return to library",
+          dukkan.isOpen()
+            ? "Continue browsing the store"
+            : state.playing
+              ? "Return to your game"
+              : "Continue browsing your games",
           "close-menu",
         ) +
         row(
@@ -366,9 +420,19 @@
     if (sub === "transfer") body += transferBody();
     if (sub === "artwork") body += scrapeBody();
     if (sub === "store")
-      body += `<h3>Storefronts</h3><p class="sim-label">Sample catalog · no downloads</p><div class="setting-box"><h3>Dukkan</h3><p>Discover curated native games.</p><img src="assets/demo/ember.svg" alt="Ember Trail sample artwork" style="width:100%;border-radius:8px"><b>Ember Trail</b><p>Fictional sample title for the install workflow.</p>${state.installing ? `<progress value="${state.storeProgress}" max="100" aria-label="Installation progress"></progress><p>${state.storeProgress}% · Installing in the background</p>` : action(state.installed.includes("ember") ? "Remove sample game" : "Install sample game", state.installed.includes("ember") ? "remove-game" : "install-game", "primary")}</div><div class="setting-box"><h3>Steam</h3><p>The real prototype integrates installed Steam games. Steam itself does not run inside this browser demo.</p>${action("Preview integration details", "steam")}</div>`;
+      body += `<h3>Storefronts</h3>${row("◇", "Dukkan", "Discover native games · open the storefront", "open-dukkan")}${row("◉", "Steam", "Preview the integration", "steam")}<p class="sim-label">Dukkan opens as its own application.</p>`;
     if (sub === "activity")
-      body += `<h3>Activity</h3><p>Accepted jobs continue after closing the store or menu.</p>${state.installing ? `<div class="setting-box"><b>Ember Trail</b><progress value="${state.storeProgress}" max="100" aria-label="Background installation"></progress><p>${state.storeProgress}% · Installing</p></div>` : state.installed.includes("ember") ? '<div class="setting-box"><b>Ember Trail · Complete</b><p>Installed and published to the sample library.</p></div>' : '<div class="setting-box"><p>No active jobs. Try installing the sample game in Dukkan.</p></div>'}${action("Open Dukkan", "sub", "secondary", 'data-sub="store"')}`;
+      body += `<h3>Activity</h3><p>Accepted Dukkan transactions continue after closing the store or menu.</p>${
+        dukkan
+          .jobs()
+          .slice()
+          .reverse()
+          .map(
+            (job) =>
+              `<div class="setting-box"><b>${esc(job.name)} · ${esc(job.phase)}</b><p>${esc(job.stage)}</p></div>`,
+          )
+          .join("") || '<div class="setting-box"><p>No transactions yet.</p></div>'
+      }${action("Open Dukkan Activity", "open-dukkan-activity", "primary")}`;
     if (sub === "controllers")
       body += `<h3>Controllers</h3><p class="sim-label">Illustrative device status</p><div class="device"><span>⊞</span><div><b>Sample normalized controller</b><small>Connected · Player 1 · simulated profile</small></div></div><p>This device card is sample data. Keyboard and touch controls work immediately. A browser-compatible connected gamepad can also navigate the preview after a button press.</p>${action("Controls & shortcuts", "help")}`;
     if (sub === "network")
@@ -444,7 +508,7 @@
       `<div class="setting-box"><label for="scrape-collection">Collection</label><select id="scrape-collection"><option>All collections</option><option>Handheld collection</option></select><p>${state.scraped ? "✓ Cover and information ready. Close the menu to see the result." : "Pocket Voyage · Artwork missing"}</p>${state.scraped ? '<img src="assets/demo/current.svg" alt="Retrieved sample artwork" style="width:100%;border-radius:8px">' : ""}${action(state.scraped ? "Run recommended lookup again" : "Recommended lookup", "scrape", "primary")}<p>Your game and saves stay untouched.</p></div>`
     );
   }
-  let receiveTimer, scrapeTimer, installTimer, displayTimer;
+  let receiveTimer, scrapeTimer, displayTimer;
   function receive() {
     if (state.transfer !== "idle") return;
     state.transfer = "receiving";
@@ -479,24 +543,6 @@
       if (state.menu && state.sub === "artwork") renderMenu(false);
     }, 300);
   }
-  function install() {
-    if (state.installing) return;
-    state.installing = true;
-    state.storeProgress = 0;
-    renderMenu();
-    installTimer = setInterval(() => {
-      state.storeProgress = Math.min(100, state.storeProgress + 10);
-      if (state.storeProgress === 100) {
-        clearInterval(installTimer);
-        state.installing = false;
-        state.installed = ["ember"];
-        persist();
-        notify("Ember Trail installed · added to Native games");
-        if (!state.menu) renderLibrary();
-      }
-      if (state.menu && ["store", "activity"].includes(state.sub)) renderMenu(false);
-    }, 400);
-  }
   function revertDisplay() {
     clearInterval(displayTimer);
     state.previewResolution = null;
@@ -516,7 +562,7 @@
   }
   function help() {
     modal(
-      `<h2 id="modal-title">Take the controls.</h2><p>Explore freely, or try these three short tasks. System actions and titles are illustrative; Dune Runner is an original playable browser mini-game.</p><div class="controls-table"><div><kbd>Arrows</kbd> Navigate / move</div><div><kbd>Enter</kbd> Select</div><div><kbd>M</kbd> Open / close system menu</div><div><kbd>Esc</kbd> Back / open menu in game</div><div><kbd>Q / E</kbd> Previous / next tab</div><div><kbd>Space</kbd> Jump in game</div></div><ol class="tour-tasks"><li class="${state.tasks.play ? "done" : ""}">Play Dune Runner and open the menu.</li><li class="${state.tasks.transfer ? "done" : ""}">Transfer and import Pocket Voyage.</li><li class="${state.tasks.artwork ? "done" : ""}">Retrieve its artwork, then find it in Library.</li></ol><p>Mouse and touch work throughout. For a connected standard gamepad: D-pad to move, south button to select/jump, east button to go back, shoulders for tabs and Start to toggle the menu.</p>${action("Start exploring", "close-modal", "primary")}${action("Try a sample transfer", "tour-transfer")}`,
+      `<h2 id="modal-title">Take the controls.</h2><p>Explore freely, or try these three short tasks. System actions and titles are illustrative; Dune Runner is an original playable browser mini-game.</p><div class="controls-table"><div><kbd>Arrows</kbd> Navigate / move</div><div><kbd>Enter</kbd> Select</div><div><kbd>M</kbd> Open / close system menu</div><div><kbd>Esc</kbd> Back / open menu in game</div><div><kbd>Q / E</kbd> Previous / next tab</div><div><kbd>Space</kbd> Jump in game</div></div><ol class="tour-tasks"><li class="${state.tasks.play ? "done" : ""}">Play Dune Runner and open the menu.</li><li class="${state.tasks.transfer ? "done" : ""}">Transfer and import Pocket Voyage.</li><li class="${state.tasks.artwork ? "done" : ""}">Retrieve its artwork, then find it in Library.</li></ol><p>Mouse and touch work throughout. For a connected standard gamepad: D-pad to move, south button to select/jump and east button to go back. In Dukkan, Y switches Library or opens the gallery, X refreshes or stops a job, shoulders change screenshots, and Start opens search. Guide (or M) opens the system menu.</p>${action("Start exploring", "close-modal", "primary")}${action("Try a sample transfer", "tour-transfer")}`,
     );
     sessionStorageSafe("zaman-tour-seen", "1");
   }
@@ -596,14 +642,11 @@
       case "scrape":
         scrape();
         break;
-      case "install-game":
-        install();
+      case "open-dukkan":
+        launchDukkan();
         break;
-      case "remove-game":
-        state.installed = [];
-        persist();
-        renderMenu();
-        notify("Sample game removed");
+      case "open-dukkan-activity":
+        launchDukkan(true);
         break;
       case "scan":
         notify("Found sample network: Zaman-Lab");
@@ -693,6 +736,7 @@
         try {
           localStorage.removeItem("zaman-preview-v1");
           sessionStorage.removeItem("zaman-tour-seen");
+          localStorage.removeItem("zaman-dukkan-preview-v1");
         } catch {}
         location.href = location.pathname;
         break;
@@ -852,6 +896,13 @@
   const keys = new Set();
   document.addEventListener("keydown", (e) => {
     document.body.classList.add("keyboard-nav");
+    if (dukkan.isOpen() && !state.menu && !$("#modal").open) {
+      if (e.key.toLowerCase() === "m" && !e.repeat && !dukkan.keyboardOpen()) {
+        e.preventDefault();
+        openMenu();
+      } else dukkan.keydown(e);
+      return;
+    }
     const typing = e.target.matches("textarea,input:not([type=range]):not([type=checkbox])");
     if (typing && e.key !== "Escape") return;
     if (e.key === "Escape") {
@@ -1133,7 +1184,7 @@
     const dt = Math.min((t - lastFrame) / 1000 || 0, 0.035);
     lastFrame = t;
     if (state.playing) {
-      if (!state.menu && !document.hidden && !$("#modal").open) update(dt);
+      if (!state.menu && !dukkan.isOpen() && !document.hidden && !$("#modal").open) update(dt);
       draw(t);
     }
     pollGamepad(t);
@@ -1166,6 +1217,7 @@
       return;
     }
     const p = pads && [...pads].find((p) => p && p.mapping === "standard");
+    controllerConnected = !!p;
     if (!p) {
       padHeld = {};
       return;
@@ -1176,12 +1228,38 @@
       up: p.buttons[12]?.pressed || p.axes[1] < -0.55,
       down: p.buttons[13]?.pressed || p.axes[1] > 0.55,
       accept: p.buttons[0]?.pressed,
+      refresh: p.buttons[2]?.pressed,
+      library: p.buttons[3]?.pressed,
+      guide: p.buttons[16]?.pressed,
       back: p.buttons[1]?.pressed,
       menu: p.buttons[9]?.pressed,
       prev: p.buttons[4]?.pressed,
       next: p.buttons[5]?.pressed,
     };
     const newPress = (k) => active[k] && !padHeld[k];
+    if (dukkan.isOpen() && !state.menu && !$("#modal").open) {
+      if (newPress("guide")) openMenu();
+      else {
+        if (t - padLast > 180) {
+          for (const direction of ["left", "right", "up", "down"])
+            if (active[direction]) dukkan.handle(direction);
+          if (active.left || active.right || active.up || active.down) padLast = t;
+        }
+        for (const [key, action] of [
+          ["accept", "select"],
+          ["back", "back"],
+          ["refresh", "refresh"],
+          ["library", "library"],
+          ["menu", "search"],
+          ["prev", "previousImage"],
+          ["next", "nextImage"],
+        ]) {
+          if (newPress(key)) dukkan.handle(action);
+        }
+      }
+      padHeld = active;
+      return;
+    }
     if (state.playing && !state.menu && !$("#modal").open) {
       if (active.left) keys.add("ArrowLeft");
       else keys.delete("ArrowLeft");
@@ -1239,21 +1317,15 @@
   setInterval(clock, 60000);
   renderLibrary();
   const scene = new URLSearchParams(location.search).get("scene");
-  if (scene === "game") play();
+  if (scene === "store") launchDukkan();
+  else if (scene === "game") play();
   else if (scene === "library") {
     state.page = "Library";
     renderLibrary();
   } else if (
-    [
-      "transfer",
-      "artwork",
-      "audio",
-      "store",
-      "notifications",
-      "controllers",
-      "power",
-      "settings",
-    ].includes(scene)
+    ["transfer", "artwork", "audio", "notifications", "controllers", "power", "settings"].includes(
+      scene,
+    )
   ) {
     openMenu(
       scene,

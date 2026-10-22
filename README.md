@@ -66,8 +66,10 @@ forwarded to their corresponding pages.
   Reach the flag. Opening the menu pauses the game and releases held input.
 - Transfer: receive Pocket Voyage, select its destination, import it, optionally
   run recommended artwork lookup, close the menu and find it in Library.
-- Dukkan: install/remove fictional Ember Trail. Installation continues with the
-  menu closed and publishes a sample Native games entry.
+- Dukkan: a separate QML-based storefront, with Discover/Library/Activity,
+  horizontal shelf, details/gallery, search keyboard and transaction confirmations.
+  Sample installs/removals queue and continue with Dukkan closed, then update Native
+  games. See `docs/DUKKAN-DEMO.md` for the source comparison and simulation limits.
 - Audio, network, Bluetooth, controllers, display preview/revert, notifications,
   Do Not Disturb and power confirmations are simulations. They do not control
   the host computer, run native applications or contact hardware services.
